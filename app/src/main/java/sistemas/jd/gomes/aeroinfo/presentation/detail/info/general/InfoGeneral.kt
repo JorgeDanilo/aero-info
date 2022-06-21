@@ -1,4 +1,4 @@
-package sistemas.jd.gomes.aeroinfo
+package sistemas.jd.gomes.aeroinfo.presentation.detail.info.general
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -13,10 +13,11 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.sp
+import sistemas.jd.gomes.aeroinfo.R
 
 @Composable
-fun InfoWeather() {
+fun InfoGeneral() {
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -24,20 +25,11 @@ fun InfoWeather() {
             .wrapContentSize(Alignment.Center)
     ) {
         Text(
-            text = "Informações Metereologicas",
+            text = "Informações Gerais",
             fontWeight = FontWeight.Bold,
             color = Color.White,
             modifier = Modifier.align(Alignment.CenterHorizontally),
-            textAlign = TextAlign.Center,
-            fontSize = 20.sp
-        )
-        Text(
-            text = "Informações Metereologicas",
-            fontWeight = FontWeight.Bold,
-            color = Color.White,
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-            textAlign = TextAlign.Center,
-            fontSize = 20.sp
+            textAlign = TextAlign.Center
         )
     }
 }
@@ -45,5 +37,6 @@ fun InfoWeather() {
 @Composable
 @Preview
 private fun ShowScreen() {
-    InfoWeather()
+    InfoGeneral()
 }
+

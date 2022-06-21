@@ -1,4 +1,4 @@
-package sistemas.jd.gomes.aeroinfo
+package sistemas.jd.gomes.aeroinfo.presentation.detail.info
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AirplaneTicket

@@ -1,4 +1,4 @@
-package sistemas.jd.gomes.aeroinfo
+package sistemas.jd.gomes.aeroinfo.presentation.detail.info
 
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import sistemas.jd.gomes.aeroinfo.R
 
 @Composable
 fun DetailScreen() {
