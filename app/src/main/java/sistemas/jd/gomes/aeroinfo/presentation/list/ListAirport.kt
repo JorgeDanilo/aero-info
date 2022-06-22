@@ -191,8 +191,6 @@ fun ListAirportItem() {
 
                 Spacer(modifier = Modifier.padding(start = 6.dp))
 
-                Spacer(modifier = Modifier.padding(start = 6.dp))
-
                 Icon(
                     Icons.Default.AirplaneTicket,
                     tint = MaterialTheme.colors.GrayPrimary,

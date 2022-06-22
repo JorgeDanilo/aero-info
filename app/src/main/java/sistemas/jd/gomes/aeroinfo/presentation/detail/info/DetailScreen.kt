@@ -1,18 +1,15 @@
 package sistemas.jd.gomes.aeroinfo.presentation.detail.info
 
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import sistemas.jd.gomes.aeroinfo.R
+import sistemas.jd.gomes.aeroinfo.ui.theme.GrayDark
+import sistemas.jd.gomes.aeroinfo.ui.theme.YellowDark
 
 @Composable
 fun DetailScreen() {
@@ -35,9 +32,9 @@ fun BottomNavigation(navController: NavController) {
         BottomNavItem.INFO_ROTAER
     )
 
-    androidx.compose.material.BottomNavigation(
-        backgroundColor = colorResource(id = R.color.teal_200),
-        contentColor = Color.Black
+    BottomNavigation(
+        backgroundColor = MaterialTheme.colors.GrayDark,
+        contentColor = Color.White
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
@@ -49,7 +46,7 @@ fun BottomNavigation(navController: NavController) {
                 label = {
                     Text(text = item.title, fontSize = 9.sp)
                 },
-                selectedContentColor = Color.Black,
+                selectedContentColor = MaterialTheme.colors.YellowDark,
                 unselectedContentColor = Color.Black.copy(0.4f),
                 alwaysShowLabel = true,
                 selected = currentRoute == item.screeRoute,
