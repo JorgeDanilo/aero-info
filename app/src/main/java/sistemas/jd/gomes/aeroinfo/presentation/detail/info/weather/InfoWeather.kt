@@ -2,8 +2,10 @@ package sistemas.jd.gomes.aeroinfo.presentation.detail.info.weather
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AirplaneTicket
@@ -20,6 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import sistemas.jd.gomes.aeroinfo.ui.theme.BlueDark
 import sistemas.jd.gomes.aeroinfo.ui.theme.GrayPrimary
 
@@ -41,7 +44,10 @@ fun InfoWeather() {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(all = 8.dp),
+                    .padding(all = 8.dp)
+                    .verticalScroll(
+                        rememberScrollState()
+                    ),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Spacer(modifier = Modifier.height(28.dp))

@@ -35,7 +35,7 @@ fun InfoCharts() {
             )
             Column(
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .fillMaxSize()
                     .padding(all = 8.dp)
                     .verticalScroll(
                         rememberScrollState()
