@@ -1,12 +1,9 @@
 package sistemas.jd.gomes.aeroinfo.presentation.search
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
@@ -21,11 +18,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import sistemas.jd.gomes.aeroinfo.R
+import sistemas.jd.gomes.aeroinfo.presentation.detail.info.general.Screen
 import sistemas.jd.gomes.aeroinfo.ui.theme.BlueDark
 import sistemas.jd.gomes.aeroinfo.ui.theme.GrayDark
 import sistemas.jd.gomes.aeroinfo.ui.theme.GrayPrimary
@@ -34,8 +32,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 @Composable
-fun ListAirport(
-//    navController: NavHostController,
+fun SearchAirportScreen(
+    navController: NavHostController,
     searchViewModel: SearchViewModel = hiltViewModel()
 ) {
 
@@ -90,13 +88,13 @@ fun ListAirport(
 //                    navController.popBackStack()
                 }
             )
-            ListAirportContent(searchViewModel)
+            ListAirportContent(searchViewModel, navController)
         }
     )
 }
 
 @Composable
-fun ListAirportContent(viewModel: SearchViewModel) {
+fun ListAirportContent(viewModel: SearchViewModel, navController: NavHostController) {
     val airports = viewModel.airports.collectAsState()
     Column(
         modifier = Modifier
@@ -110,7 +108,7 @@ fun ListAirportContent(viewModel: SearchViewModel) {
                 val result = airports.value.data
                 if (!result?.data.isNullOrEmpty()) {
                     result?.data?.forEach {
-                        ListAirportItem(it)
+                        ListAirportItem(it, navController)
                     }
                 }
             }
@@ -124,7 +122,7 @@ fun ListAirportContent(viewModel: SearchViewModel) {
             }
 
             is ResourceState.Error -> {
-                airports.value.data?.message.let { message ->
+                airports.value.data?.message.let {
 
                 }
             }
@@ -134,7 +132,10 @@ fun ListAirportContent(viewModel: SearchViewModel) {
 }
 
 @Composable
-fun ListAirportItem(airport: List<String>) {
+fun ListAirportItem(
+    infoAirport: List<String>,
+    navController: NavHostController
+) {
     Card(
         backgroundColor = MaterialTheme.colors.GrayDark,
         elevation = 8.dp,
@@ -143,10 +144,13 @@ fun ListAirportItem(airport: List<String>) {
             .padding(top = 8.dp, start = 12.dp, end = 12.dp)
             .height(330.dp)
     ) {
-        Column(modifier = Modifier.padding(all = 8.dp)) {
+        Column(modifier = Modifier
+            .padding(all = 8.dp)
+            .clickable {
+                navController.navigate(Screen.Details.passIcaoCode(icaoCode = infoAirport[0]))
+            }) {
             Row {
-
-                if (airport[4] == "g") {
+                if (infoAirport[4] == "g") {
                     Card(
                         shape = CircleShape,
                         backgroundColor = Color.Green,
@@ -158,7 +162,7 @@ fun ListAirportItem(airport: List<String>) {
                                 .width(10.dp)
                         )
                     }
-                } else if (airport[4] == "y") {
+                } else if (infoAirport[4] == "y") {
                     Card(
                         shape = CircleShape,
                         backgroundColor = Color.Yellow,
@@ -170,7 +174,7 @@ fun ListAirportItem(airport: List<String>) {
                                 .width(10.dp)
                         )
                     }
-                } else if (airport[4] == "r") {
+                } else if (infoAirport[4] == "r") {
                     Card(
                         shape = CircleShape,
                         backgroundColor = Color.Red,
@@ -186,7 +190,7 @@ fun ListAirportItem(airport: List<String>) {
 
 
                 Text(
-                    text = airport[0],
+                    text = infoAirport[0],
                     fontWeight = FontWeight.Bold
                 )
 
@@ -196,7 +200,7 @@ fun ListAirportItem(airport: List<String>) {
                 )
 
                 Text(
-                    text = airport[1],
+                    text = infoAirport[1],
                     fontWeight = FontWeight.Bold,
                 )
 
@@ -285,19 +289,19 @@ fun ListAirportItem(airport: List<String>) {
                     fontWeight = FontWeight.Bold
                 )
 
-                if (airport[4] == "g") {
+                if (infoAirport[4] == "g") {
                     Text(
                         text = ">= 5000m",
                         modifier = Modifier.padding(start = 5.dp, top = 2.dp),
                     )
-                } else if (airport[4] == "y") {
+                } else if (infoAirport[4] == "y") {
                     Text(
                         text = "< 5000 e >= 1500m",
                         modifier = Modifier.padding(start = 5.dp, top = 2.dp),
                     )
-                } else if (airport[4] == "r") {
+                } else if (infoAirport[4] == "r") {
                     Text(
-                        text = "< 1500",
+                        text = "< 1500m",
                         modifier = Modifier.padding(start = 5.dp, top = 2.dp),
                     )
                 }
@@ -311,19 +315,19 @@ fun ListAirportItem(airport: List<String>) {
                     fontWeight = FontWeight.Bold
                 )
 
-                if (airport[4] == "g") {
+                if (infoAirport[4] == "g") {
                     Text(
                         text = ">= 1500m",
                         modifier = Modifier.padding(start = 5.dp, top = 2.dp),
                     )
-                } else if (airport[4] == "y") {
+                } else if (infoAirport[4] == "y") {
                     Text(
-                        text = "< 1500 e > 500",
+                        text = "< 1500m e > 500m",
                         modifier = Modifier.padding(start = 5.dp, top = 2.dp),
                     )
-                } else if (airport[4] == "r") {
+                } else if (infoAirport[4] == "r") {
                     Text(
-                        text = "< 600",
+                        text = "< 600m",
                         modifier = Modifier.padding(start = 5.dp, top = 2.dp),
                     )
                 }
@@ -343,7 +347,7 @@ fun ListAirportItem(airport: List<String>) {
 //            }
 
             Text(
-                text = "º ${airport[5]}",
+                text = "${infoAirport[5]}",
                 modifier = Modifier
                     .padding(start = 2.dp, top = 2.dp)
                     .padding(top = 5.dp),
@@ -351,12 +355,6 @@ fun ListAirportItem(airport: List<String>) {
             )
         }
     }
-}
-
-@Preview
-@Composable
-fun screenAirport() {
-    ListAirportItem(emptyList())
 }
 
 fun timeNow(): String {

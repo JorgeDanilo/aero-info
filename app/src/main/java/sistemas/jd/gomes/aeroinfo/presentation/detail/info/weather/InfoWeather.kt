@@ -22,12 +22,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
+import androidx.navigation.NavHostController
 import sistemas.jd.gomes.aeroinfo.ui.theme.BlueDark
 import sistemas.jd.gomes.aeroinfo.ui.theme.GrayPrimary
 
 @Composable
-fun InfoWeather() {
+fun InfoWeather(navController: NavHostController?) {
     Scaffold(
         backgroundColor = MaterialTheme.colors.BlueDark,
         contentColor = Color.White,
@@ -399,5 +399,5 @@ fun InfoWeather() {
 @Composable
 @Preview
 private fun ShowScreen() {
-    InfoWeather()
+    InfoWeather(navController = null)
 }
