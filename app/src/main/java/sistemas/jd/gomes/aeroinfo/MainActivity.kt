@@ -3,17 +3,17 @@ package sistemas.jd.gomes.aeroinfo
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import sistemas.jd.gomes.aeroinfo.presentation.detail.info.DetailScreen
-import sistemas.jd.gomes.aeroinfo.presentation.detail.info.weather.InfoWeather
-import sistemas.jd.gomes.aeroinfo.presentation.list.ListAirport
+import dagger.hilt.android.AndroidEntryPoint
+import sistemas.jd.gomes.aeroinfo.presentation.search.ListAirport
 import sistemas.jd.gomes.aeroinfo.ui.theme.AeroinfoTheme
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             AeroinfoTheme {
-                DetailScreen()
+                ListAirport()
             }
         }
     }

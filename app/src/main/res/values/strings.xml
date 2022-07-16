@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Aero Information</string>
+	<string name="title_search_bar">Exemplo: SBGO, SBSP</string>
 </resources>
