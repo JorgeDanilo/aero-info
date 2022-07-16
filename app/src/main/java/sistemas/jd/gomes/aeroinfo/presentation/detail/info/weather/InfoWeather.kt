@@ -14,6 +14,8 @@ import androidx.compose.material.icons.filled.Speed
 import androidx.compose.material.icons.filled.Thermostat
 import androidx.compose.material.icons.rounded.WbSunny
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -22,12 +24,38 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import sistemas.jd.gomes.aeroinfo.data.model.AirportInfoResponse
+import sistemas.jd.gomes.aeroinfo.presentation.detail.info.InfoViewModel
 import sistemas.jd.gomes.aeroinfo.ui.theme.BlueDark
 import sistemas.jd.gomes.aeroinfo.ui.theme.GrayPrimary
+import sistemas.jd.gomes.aeroinfo.util.ResourceState
 
 @Composable
-fun InfoWeather(navController: NavHostController?) {
+fun InfoWeather(
+    navController: NavHostController?,
+    infoViewModel: InfoViewModel = hiltViewModel()
+) {
+    val result by infoViewModel.infoAirport.collectAsState()
+    when (result) {
+        is ResourceState.Success -> {
+            result.data?.let { InfoContent(it) }
+        }
+        is ResourceState.Loading -> {
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier.fillMaxSize()
+            ) {
+                CircularProgressIndicator()
+            }
+        }
+        else -> {}
+    }
+}
+
+@Composable
+private fun InfoContent(airportInfo: AirportInfoResponse) {
     Scaffold(
         backgroundColor = MaterialTheme.colors.BlueDark,
         contentColor = Color.White,
@@ -64,14 +92,14 @@ fun InfoWeather(navController: NavHostController?) {
                         )
                     }
                     Text(
-                        text = "Aeroporto de Congonhas / SP",
+                        text = airportInfo.data.nome,
                         color = Color.White,
                         fontWeight = FontWeight.Bold,
                         fontSize = 22.sp
                     )
                 }
                 Text(
-                    text = "º 23º32'37'' / 46º39'79''",
+                    text = "º ${airportInfo.data.localizacao}",
                     color = Color.Gray,
                 )
 
@@ -97,7 +125,7 @@ fun InfoWeather(navController: NavHostController?) {
                             contentDescription = null,
                         )
                         Text(
-                            text = "20/06",
+                            text = airportInfo.data.data,
                             modifier = Modifier.padding(start = 5.dp, top = 2.dp),
                         )
 
@@ -109,19 +137,7 @@ fun InfoWeather(navController: NavHostController?) {
                             contentDescription = null,
                         )
                         Text(
-                            text = "230/3KT",
-                            modifier = Modifier.padding(start = 5.dp, top = 2.dp),
-                        )
-
-                        Spacer(modifier = Modifier.padding(start = 6.dp))
-
-                        Icon(
-                            Icons.Default.Thermostat,
-                            tint = MaterialTheme.colors.GrayPrimary,
-                            contentDescription = null,
-                        )
-                        Text(
-                            text = "16ºC",
+                            text = airportInfo.data.vento,
                             modifier = Modifier.padding(start = 5.dp, top = 2.dp),
                         )
 
@@ -133,7 +149,19 @@ fun InfoWeather(navController: NavHostController?) {
                             contentDescription = null,
                         )
                         Text(
-                            text = "1013 hpa",
+                            text = "xxxx hpa",
+                            modifier = Modifier.padding(start = 5.dp, top = 2.dp),
+                        )
+                    }
+
+                    Row {
+                        Icon(
+                            Icons.Default.Thermostat,
+                            tint = MaterialTheme.colors.GrayPrimary,
+                            contentDescription = null,
+                        )
+                        Text(
+                            text = airportInfo.data.temperatura,
                             modifier = Modifier.padding(start = 5.dp, top = 2.dp),
                         )
                     }
@@ -146,7 +174,7 @@ fun InfoWeather(navController: NavHostController?) {
                         )
 
                         Text(
-                            text = "Maior ou igual à 10km.",
+                            text = airportInfo.data.visibilidade,
                             modifier = Modifier.padding(start = 5.dp, top = 2.dp),
                         )
                     }
@@ -160,7 +188,7 @@ fun InfoWeather(navController: NavHostController?) {
                         )
 
                         Text(
-                            text = "Não há formação.",
+                            text = airportInfo.data.teto,
                             modifier = Modifier.padding(start = 5.dp, top = 2.dp),
                         )
 
@@ -171,7 +199,7 @@ fun InfoWeather(navController: NavHostController?) {
                         )
 
                         Text(
-                            text = "53%",
+                            text = airportInfo.data.unidadeRelativa,
                             modifier = Modifier.padding(top = 2.dp, start = 5.dp),
                         )
                     }
@@ -185,7 +213,7 @@ fun InfoWeather(navController: NavHostController?) {
                         )
 
                         Text(
-                            text = "Com poucas Nuvens",
+                            text = airportInfo.data.ceu,
                             modifier = Modifier.padding(top = 2.dp, start = 5.dp),
                         )
                     }
@@ -198,7 +226,7 @@ fun InfoWeather(navController: NavHostController?) {
                         )
 
                         Text(
-                            text = "Sem tempo significativo",
+                            text = airportInfo.data.condicoesTempo,
                             modifier = Modifier.padding(top = 2.dp, start = 5.dp),
                         )
                     }
@@ -211,7 +239,7 @@ fun InfoWeather(navController: NavHostController?) {
                         )
 
                         Text(
-                            text = "09:48",
+                            text = "xx:xx",
                             modifier = Modifier.padding(top = 2.dp, start = 5.dp),
                         )
 
@@ -220,7 +248,7 @@ fun InfoWeather(navController: NavHostController?) {
                             contentDescription = null
                         )
                         Text(
-                            text = "20:28",
+                            text = "xx:xx",
                             modifier = Modifier.padding(top = 2.dp, start = 5.dp)
                         )
                     }
@@ -237,7 +265,7 @@ fun InfoWeather(navController: NavHostController?) {
 
                     Row {
                         Text(
-                            text = "- METAR SBSP 212000Z 34006KT 9999 FEW046 24/14 Q1019=",
+                            text = "- ${airportInfo.data.metar}",
                         )
                     }
 

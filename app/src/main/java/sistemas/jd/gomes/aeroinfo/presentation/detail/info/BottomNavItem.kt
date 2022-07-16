@@ -10,13 +10,13 @@ import androidx.compose.ui.graphics.vector.ImageVector
 sealed class BottomNavItem(
     var title: String,
     var icon: ImageVector,
-    var screeRoute: String
+    var screeRoute: String,
 ) {
     object INFO_WEATHER :
         BottomNavItem(
             "Inf. Metereologicas",
             Icons.Default.AirplaneTicket,
-            "info_met"
+            "info_met/"
         )
 
     object INFO_GENERAL :

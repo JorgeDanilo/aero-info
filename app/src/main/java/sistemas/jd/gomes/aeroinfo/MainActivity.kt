@@ -6,7 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
-import sistemas.jd.gomes.aeroinfo.presentation.detail.info.NavigationGraph
+import sistemas.jd.gomes.aeroinfo.presentation.NavGraph
 import sistemas.jd.gomes.aeroinfo.ui.theme.AeroinfoTheme
 
 @AndroidEntryPoint
@@ -19,7 +19,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             AeroinfoTheme {
                 navController = rememberNavController()
-                NavigationGraph(navController = navController)
+                NavGraph(navController = navController)
             }
         }
     }
