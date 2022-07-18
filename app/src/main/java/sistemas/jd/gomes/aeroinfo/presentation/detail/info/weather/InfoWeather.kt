@@ -25,7 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
+import sistemas.jd.gomes.aeroinfo.data.model.AirfieldsInfo
 import sistemas.jd.gomes.aeroinfo.data.model.AirportInfoResponse
 import sistemas.jd.gomes.aeroinfo.presentation.detail.info.InfoViewModel
 import sistemas.jd.gomes.aeroinfo.ui.theme.BlueDark
@@ -34,7 +34,6 @@ import sistemas.jd.gomes.aeroinfo.util.ResourceState
 
 @Composable
 fun InfoWeather(
-    navController: NavHostController?,
     infoViewModel: InfoViewModel = hiltViewModel()
 ) {
     val result by infoViewModel.infoAirport.collectAsState()
@@ -65,7 +64,7 @@ private fun InfoContent(airportInfo: AirportInfoResponse) {
         content = {
             Divider(
                 modifier = Modifier
-                    .height(290.dp)
+                    .height(350.dp)
                     .background(MaterialTheme.colors.BlueDark)
                     .clip(RoundedCornerShape(20.dp))
             )
@@ -140,9 +139,9 @@ private fun InfoContent(airportInfo: AirportInfoResponse) {
                             text = airportInfo.data.vento,
                             modifier = Modifier.padding(start = 5.dp, top = 2.dp),
                         )
+                    }
 
-                        Spacer(modifier = Modifier.padding(start = 6.dp))
-
+                    Row {
                         Icon(
                             Icons.Default.Speed,
                             tint = MaterialTheme.colors.GrayPrimary,
@@ -152,9 +151,7 @@ private fun InfoContent(airportInfo: AirportInfoResponse) {
                             text = "xxxx hpa",
                             modifier = Modifier.padding(start = 5.dp, top = 2.dp),
                         )
-                    }
 
-                    Row {
                         Icon(
                             Icons.Default.Thermostat,
                             tint = MaterialTheme.colors.GrayPrimary,
@@ -191,6 +188,9 @@ private fun InfoContent(airportInfo: AirportInfoResponse) {
                             text = airportInfo.data.teto,
                             modifier = Modifier.padding(start = 5.dp, top = 2.dp),
                         )
+                    }
+
+                    Row {
 
                         Text(
                             text = "Umidade Relativa:",
@@ -202,9 +202,6 @@ private fun InfoContent(airportInfo: AirportInfoResponse) {
                             text = airportInfo.data.unidadeRelativa,
                             modifier = Modifier.padding(top = 2.dp, start = 5.dp),
                         )
-                    }
-
-                    Row {
 
                         Text(
                             text = "Ceú:",
@@ -427,5 +424,26 @@ private fun InfoContent(airportInfo: AirportInfoResponse) {
 @Composable
 @Preview
 private fun ShowScreen() {
-    InfoWeather(navController = null)
+    val airportInfoResponse = AirportInfoResponse(
+        true,
+        "",
+        AirfieldsInfo(
+            "SBGO",
+            "Aeroporto Santa Genoveva Goiânia",
+            "Goiânia/GO",
+            "49º 13'20'' W",
+            "16º37'52'' S",
+            "16º37'52'' S / 49º 13'20'' W",
+            "METAR SBGO 181200Z 21004KT CAVOK 21/10 Q1022=",
+            "18/07/2022 12:00(UTC)",
+            "21ºC",
+            "49%",
+            "Maior ou igual à 10km",
+            "Não há formação de teto",
+            "Claro",
+            "Sem tempo significativo",
+            "210º com 4KT ou 7km/h"
+        )
+    )
+    InfoContent(airportInfoResponse)
 }

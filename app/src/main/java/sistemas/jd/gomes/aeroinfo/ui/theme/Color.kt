@@ -15,6 +15,7 @@ val Color3 = Color(0XFF304878)
 val Color4 = Color(0XFF181848)
 val Color5 = Color(0XFFF0A818)
 val Color6 = Color(0XFF90ff17)
+val colorBackground = Color(0XFF0057A3)
 
 val Colors.GrayPrimary
     get() = Color2
@@ -42,3 +43,6 @@ val Colors.TitleColor
 
 val Colors.ItemBackgroundColor
     get() = if (isLight) Grey100 else BlueGrey900
+
+val Colors.Background
+get() = colorBackground

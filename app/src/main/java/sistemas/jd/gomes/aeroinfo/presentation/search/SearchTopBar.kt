@@ -88,7 +88,7 @@ fun SearchWidget(
             }
         },
         keyboardOptions = KeyboardOptions(
-            imeAction = ImeAction.Search
+            imeAction = ImeAction.Search,
         ),
         keyboardActions = KeyboardActions(
             onSearch = {

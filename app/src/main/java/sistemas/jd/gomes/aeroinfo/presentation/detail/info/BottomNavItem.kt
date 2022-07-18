@@ -16,7 +16,7 @@ sealed class BottomNavItem(
         BottomNavItem(
             "Inf. Metereologicas",
             Icons.Default.AirplaneTicket,
-            "info_met/"
+            "info_met"
         )
 
     object INFO_GENERAL :

@@ -3,7 +3,6 @@ package sistemas.jd.gomes.aeroinfo.presentation.search
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
@@ -12,9 +11,10 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -25,12 +25,12 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import sistemas.jd.gomes.aeroinfo.R
 import sistemas.jd.gomes.aeroinfo.presentation.detail.info.general.Screen
 import sistemas.jd.gomes.aeroinfo.ui.theme.BlueDark
-import sistemas.jd.gomes.aeroinfo.ui.theme.GrayDark
 import sistemas.jd.gomes.aeroinfo.ui.theme.GrayPrimary
 import sistemas.jd.gomes.aeroinfo.util.ResourceState
 import java.text.SimpleDateFormat
 import java.util.*
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun SearchAirportScreen(
     navController: NavHostController,
@@ -38,9 +38,9 @@ fun SearchAirportScreen(
 ) {
 
     val searchQuery by searchViewModel.searchQuery
-
     val systemUiController = rememberSystemUiController()
-    val systemBarColor = MaterialTheme.colors.GrayPrimary
+    val systemBarColor = MaterialTheme.colors.BlueDark
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     SideEffect {
         systemUiController.setStatusBarColor(
@@ -49,7 +49,7 @@ fun SearchAirportScreen(
     }
 
     Scaffold(
-        backgroundColor = MaterialTheme.colors.GrayPrimary,
+        backgroundColor = MaterialTheme.colors.BlueDark,
         contentColor = Color.White,
         topBar = {
 
@@ -57,14 +57,13 @@ fun SearchAirportScreen(
         content = {
             Divider(
                 modifier = Modifier
-                    .height(200.dp)
+                    .fillMaxSize()
                     .background(MaterialTheme.colors.BlueDark)
-                    .clip(RoundedCornerShape(20.dp))
             )
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(all = 20.dp),
+                    .padding(all = 15.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Image(
@@ -82,10 +81,12 @@ fun SearchAirportScreen(
                     searchViewModel.updateSearchQuery(query = it)
                 },
                 onSearchClicked = {
-                    searchViewModel.searchAirports(query = it)
+                    searchViewModel.searchAirports(query = it).apply {
+                        keyboardController?.hide()
+                    }
                 },
                 onCloseClicked = {
-//                    navController.popBackStack()
+                    navController.popBackStack()
                 }
             )
             ListAirportContent(searchViewModel, navController)
@@ -98,7 +99,7 @@ fun ListAirportContent(viewModel: SearchViewModel, navController: NavHostControl
     val airports = viewModel.airports.collectAsState()
     Column(
         modifier = Modifier
-            .padding(top = 150.dp, bottom = 8.dp)
+            .padding(top = 170.dp, bottom = 5.dp)
             .verticalScroll(
                 rememberScrollState()
             )
@@ -137,54 +138,58 @@ fun ListAirportItem(
     navController: NavHostController
 ) {
     Card(
-        backgroundColor = MaterialTheme.colors.GrayDark,
+        backgroundColor = MaterialTheme.colors.BlueDark,
         elevation = 8.dp,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 8.dp, start = 12.dp, end = 12.dp)
-            .height(330.dp)
+            .padding(top = 6.dp, start = 6.dp, end = 6.dp)
+            .height(290.dp)
     ) {
         Column(modifier = Modifier
-            .padding(all = 8.dp)
+            .padding(all = 6.dp)
             .clickable {
                 navController.navigate(Screen.Details.passIcaoCode(icaoCode = infoAirport[0]))
             }) {
             Row {
-                if (infoAirport[4] == "g") {
-                    Card(
-                        shape = CircleShape,
-                        backgroundColor = Color.Green,
-                        modifier = Modifier.padding(top = 5.dp, end = 5.dp)
-                    ) {
-                        Divider(
-                            modifier = Modifier
-                                .height(10.dp)
-                                .width(10.dp)
-                        )
+                when {
+                    infoAirport[4] == "g" -> {
+                        Card(
+                            shape = CircleShape,
+                            backgroundColor = Color.Green,
+                            modifier = Modifier.padding(top = 5.dp, end = 5.dp)
+                        ) {
+                            Divider(
+                                modifier = Modifier
+                                    .height(10.dp)
+                                    .width(10.dp)
+                            )
+                        }
                     }
-                } else if (infoAirport[4] == "y") {
-                    Card(
-                        shape = CircleShape,
-                        backgroundColor = Color.Yellow,
-                        modifier = Modifier.padding(top = 5.dp, end = 5.dp)
-                    ) {
-                        Divider(
-                            modifier = Modifier
-                                .height(10.dp)
-                                .width(10.dp)
-                        )
+                    infoAirport[4] == "y" -> {
+                        Card(
+                            shape = CircleShape,
+                            backgroundColor = Color.Yellow,
+                            modifier = Modifier.padding(top = 5.dp, end = 5.dp)
+                        ) {
+                            Divider(
+                                modifier = Modifier
+                                    .height(10.dp)
+                                    .width(10.dp)
+                            )
+                        }
                     }
-                } else if (infoAirport[4] == "r") {
-                    Card(
-                        shape = CircleShape,
-                        backgroundColor = Color.Red,
-                        modifier = Modifier.padding(top = 5.dp, end = 5.dp)
-                    ) {
-                        Divider(
-                            modifier = Modifier
-                                .height(10.dp)
-                                .width(10.dp)
-                        )
+                    infoAirport[4] == "r" -> {
+                        Card(
+                            shape = CircleShape,
+                            backgroundColor = Color.Red,
+                            modifier = Modifier.padding(top = 5.dp, end = 5.dp)
+                        ) {
+                            Divider(
+                                modifier = Modifier
+                                    .height(10.dp)
+                                    .width(10.dp)
+                            )
+                        }
                     }
                 }
 
@@ -347,7 +352,7 @@ fun ListAirportItem(
 //            }
 
             Text(
-                text = "${infoAirport[5]}",
+                text = infoAirport[5],
                 modifier = Modifier
                     .padding(start = 2.dp, top = 2.dp)
                     .padding(top = 5.dp),
