@@ -35,7 +35,7 @@ data class AirfieldsInfo(
     var temperatura: String,
 
     @SerializedName("ur")
-    var unidadeRelativa: String,
+    var umidadeRelativa: String,
 
     @SerializedName("visibilidade")
     var visibilidade: String,

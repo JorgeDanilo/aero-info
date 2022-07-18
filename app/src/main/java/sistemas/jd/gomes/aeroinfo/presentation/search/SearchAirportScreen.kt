@@ -26,9 +26,8 @@ import sistemas.jd.gomes.aeroinfo.R
 import sistemas.jd.gomes.aeroinfo.presentation.detail.info.general.Screen
 import sistemas.jd.gomes.aeroinfo.ui.theme.BlueDark
 import sistemas.jd.gomes.aeroinfo.ui.theme.GrayPrimary
+import sistemas.jd.gomes.aeroinfo.util.DateUtil.timeNow
 import sistemas.jd.gomes.aeroinfo.util.ResourceState
-import sistemas.jd.gomes.aeroinfo.util.timeNow
-import java.text.SimpleDateFormat
 import java.util.*
 
 @OptIn(ExperimentalComposeUiApi::class)

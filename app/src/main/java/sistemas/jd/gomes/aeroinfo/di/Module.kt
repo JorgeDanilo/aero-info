@@ -4,12 +4,13 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import okhttp3.MediaType
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import sistemas.jd.gomes.aeroinfo.data.remote.AirportApi
+import sistemas.jd.gomes.aeroinfo.data.remote.MeteorologyApi
+import sistemas.jd.gomes.aeroinfo.data.remote.SunriseDayApi
 import sistemas.jd.gomes.aeroinfo.util.Constants
+import sistemas.jd.gomes.aeroinfo.util.XmlOrJsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -19,7 +20,7 @@ object Module {
 
     @Provides
     @Singleton
-    fun provideHttpClient() : OkHttpClient {
+    fun provideHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
             .readTimeout(15, TimeUnit.SECONDS)
             .connectTimeout(15, TimeUnit.SECONDS)
@@ -31,8 +32,8 @@ object Module {
     @Provides
     fun provideRetrofit(client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
+            .baseUrl(Constants.BASE_URL_REDMET)
+            .addConverterFactory(XmlOrJsonConverterFactory())
             .client(client)
             .build()
     }
@@ -43,5 +44,17 @@ object Module {
         return retrofit.create(AirportApi::class.java)
     }
 
+    @Singleton
+    @Provides
+    fun provideServiceMeteorologyApi(retrofit: Retrofit): MeteorologyApi {
+        return retrofit.create(MeteorologyApi::class.java)
+    }
+
+
+    @Singleton
+    @Provides
+    fun provideServiceSunsetDay(retrofit: Retrofit): SunriseDayApi {
+        return retrofit.create(SunriseDayApi::class.java)
+    }
 
 }

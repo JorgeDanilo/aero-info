@@ -11,14 +11,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import sistemas.jd.gomes.aeroinfo.presentation.detail.info.BottomNavItem
-import sistemas.jd.gomes.aeroinfo.ui.theme.GrayDark
+import sistemas.jd.gomes.aeroinfo.ui.theme.BlueDark
 import sistemas.jd.gomes.aeroinfo.ui.theme.YellowDark
 
 @Composable
-fun DetailScreen(
-    navController: NavHostController,
-    detailsViewModel: DetailsViewModel = hiltViewModel()
-) {
+fun DetailScreen() {
     val navController = rememberNavController()
     Scaffold(
         bottomBar = {
@@ -39,7 +36,7 @@ fun BottomNavigation(navController: NavController) {
     )
 
     BottomNavigation(
-        backgroundColor = MaterialTheme.colors.GrayDark,
+        backgroundColor = MaterialTheme.colors.BlueDark,
         contentColor = Color.White
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -53,7 +50,7 @@ fun BottomNavigation(navController: NavController) {
                     Text(text = item.title, fontSize = 9.sp)
                 },
                 selectedContentColor = MaterialTheme.colors.YellowDark,
-                unselectedContentColor = Color.Black.copy(0.4f),
+                unselectedContentColor = Color.White,
                 alwaysShowLabel = true,
                 selected = currentRoute == item.screeRoute,
                 onClick = {

@@ -21,12 +21,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import sistemas.jd.gomes.aeroinfo.data.model.AirfieldsInfo
-import sistemas.jd.gomes.aeroinfo.data.model.AirportInfoResponse
+import sistemas.jd.gomes.aeroinfo.data.model.AirportDto
 import sistemas.jd.gomes.aeroinfo.presentation.detail.info.InfoViewModel
 import sistemas.jd.gomes.aeroinfo.ui.theme.BlueDark
 import sistemas.jd.gomes.aeroinfo.ui.theme.GrayPrimary
@@ -54,7 +52,7 @@ fun InfoWeather(
 }
 
 @Composable
-private fun InfoContent(airportInfo: AirportInfoResponse) {
+private fun InfoContent(airportInfo: AirportDto) {
     Scaffold(
         backgroundColor = MaterialTheme.colors.BlueDark,
         contentColor = Color.White,
@@ -70,8 +68,8 @@ private fun InfoContent(airportInfo: AirportInfoResponse) {
             )
             Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(all = 8.dp)
+                    .fillMaxSize()
+                    .padding(start = 8.dp, top = 8.dp, end = 8.dp, bottom = 50.dp)
                     .verticalScroll(
                         rememberScrollState()
                     ),
@@ -91,14 +89,14 @@ private fun InfoContent(airportInfo: AirportInfoResponse) {
                         )
                     }
                     Text(
-                        text = airportInfo.data.nome,
+                        text = airportInfo.nome,
                         color = Color.White,
                         fontWeight = FontWeight.Bold,
                         fontSize = 22.sp
                     )
                 }
                 Text(
-                    text = "º ${airportInfo.data.localizacao}",
+                    text = "º ${airportInfo.localizacao}",
                     color = Color.Gray,
                 )
 
@@ -124,19 +122,19 @@ private fun InfoContent(airportInfo: AirportInfoResponse) {
                             contentDescription = null,
                         )
                         Text(
-                            text = airportInfo.data.data,
+                            text = airportInfo.data,
                             modifier = Modifier.padding(start = 5.dp, top = 2.dp),
                         )
+                    }
 
-                        Spacer(modifier = Modifier.padding(start = 6.dp))
-
+                    Row {
                         Icon(
                             Icons.Default.AirplaneTicket,
                             tint = MaterialTheme.colors.GrayPrimary,
                             contentDescription = null,
                         )
                         Text(
-                            text = airportInfo.data.vento,
+                            text = airportInfo.vento,
                             modifier = Modifier.padding(start = 5.dp, top = 2.dp),
                         )
                     }
@@ -158,7 +156,7 @@ private fun InfoContent(airportInfo: AirportInfoResponse) {
                             contentDescription = null,
                         )
                         Text(
-                            text = airportInfo.data.temperatura,
+                            text = airportInfo.temperatura,
                             modifier = Modifier.padding(start = 5.dp, top = 2.dp),
                         )
                     }
@@ -171,7 +169,7 @@ private fun InfoContent(airportInfo: AirportInfoResponse) {
                         )
 
                         Text(
-                            text = airportInfo.data.visibilidade,
+                            text = airportInfo.visibilidade,
                             modifier = Modifier.padding(start = 5.dp, top = 2.dp),
                         )
                     }
@@ -185,7 +183,7 @@ private fun InfoContent(airportInfo: AirportInfoResponse) {
                         )
 
                         Text(
-                            text = airportInfo.data.teto,
+                            text = airportInfo.teto,
                             modifier = Modifier.padding(start = 5.dp, top = 2.dp),
                         )
                     }
@@ -199,9 +197,11 @@ private fun InfoContent(airportInfo: AirportInfoResponse) {
                         )
 
                         Text(
-                            text = airportInfo.data.unidadeRelativa,
+                            text = airportInfo.umidadeRelativa,
                             modifier = Modifier.padding(top = 2.dp, start = 5.dp),
                         )
+
+                        Spacer(modifier = Modifier.padding(start = 6.dp))
 
                         Text(
                             text = "Ceú:",
@@ -210,7 +210,7 @@ private fun InfoContent(airportInfo: AirportInfoResponse) {
                         )
 
                         Text(
-                            text = airportInfo.data.ceu,
+                            text = airportInfo.ceu,
                             modifier = Modifier.padding(top = 2.dp, start = 5.dp),
                         )
                     }
@@ -223,7 +223,7 @@ private fun InfoContent(airportInfo: AirportInfoResponse) {
                         )
 
                         Text(
-                            text = airportInfo.data.condicoesTempo,
+                            text = airportInfo.condicoesTempo,
                             modifier = Modifier.padding(top = 2.dp, start = 5.dp),
                         )
                     }
@@ -236,7 +236,7 @@ private fun InfoContent(airportInfo: AirportInfoResponse) {
                         )
 
                         Text(
-                            text = "xx:xx",
+                            text = airportInfo.sunsetDays[0].sunrise,
                             modifier = Modifier.padding(top = 2.dp, start = 5.dp),
                         )
 
@@ -245,7 +245,7 @@ private fun InfoContent(airportInfo: AirportInfoResponse) {
                             contentDescription = null
                         )
                         Text(
-                            text = "xx:xx",
+                            text = airportInfo.sunsetDays[0].sunset,
                             modifier = Modifier.padding(top = 2.dp, start = 5.dp)
                         )
                     }
@@ -262,7 +262,7 @@ private fun InfoContent(airportInfo: AirportInfoResponse) {
 
                     Row {
                         Text(
-                            text = "- ${airportInfo.data.metar}",
+                            text = "- ${airportInfo.metar}",
                         )
                     }
 
@@ -278,10 +278,7 @@ private fun InfoContent(airportInfo: AirportInfoResponse) {
 
                     Row {
                         Text(
-                            text = "- TAF SBSP 211600Z 2118Z 2118/2206 35008KT CAVOK \n " +
-                                    "TX26/2118Z TN16/2206Z \n" +
-                                    "º TEMPO 2119/2124 16005KT\n" +
-                                    "º BECMG 2200/2202 03005KT RMK PHG =",
+                            text = "- ${airportInfo.taf}",
                         )
                     }
 
@@ -308,142 +305,57 @@ private fun InfoContent(airportInfo: AirportInfoResponse) {
                             color = MaterialTheme.colors.GrayPrimary,
                             modifier = Modifier.padding(start = 100.dp)
                         )
-
-                        Text(
-                            text = "Local",
-                            color = MaterialTheme.colors.GrayPrimary,
-                            modifier = Modifier.padding(start = 100.dp)
-                        )
                     }
 
                     Spacer(modifier = Modifier.height(6.dp))
 
-                    Row {
-                        Text(text = "19/06/2022")
+                    airportInfo.sunsetDays.forEach {
+                        Row {
+                            Text(text = it.dateSunrise)
 
-                        Text(
-                            text = "10:19",
-                            modifier = Modifier.padding(start = 20.dp)
-                        )
+                            Text(
+                                text = it.sunrise,
+                                modifier = Modifier.padding(start = 20.dp)
+                            )
 
-                        Icon(
-                            Icons.Rounded.WbSunny,
-                            contentDescription = null
-                        )
+                            Icon(
+                                Icons.Rounded.WbSunny,
+                                contentDescription = null
+                            )
 
-                        Text(
-                            text = "20:32",
-                        )
-
-                        Text(text = "17:32", modifier = Modifier.padding(start = 40.dp))
-
-                        Icon(
-                            Icons.Rounded.WbSunny,
-                            contentDescription = null
-                        )
-
-                        Text(
-                            text = "17:32",
-                        )
-
+                            Text(
+                                text = it.sunset,
+                            )
+                        }
                     }
-
-                    Spacer(modifier = Modifier.height(6.dp))
-
-                    Row {
-                        Text(text = "20/06/2022")
-
-                        Text(
-                            text = "10:19",
-                            modifier = Modifier.padding(start = 20.dp)
-                        )
-
-                        Icon(
-                            Icons.Rounded.WbSunny,
-                            contentDescription = null
-                        )
-
-                        Text(
-                            text = "20:32",
-                        )
-
-                        Text(text = "17:32", modifier = Modifier.padding(start = 40.dp))
-
-                        Icon(
-                            Icons.Rounded.WbSunny,
-                            contentDescription = null
-                        )
-
-                        Text(
-                            text = "17:32",
-                        )
-
-                    }
-
-                    Spacer(modifier = Modifier.height(6.dp))
-
-                    Row {
-
-                        Text(text = "21/06/2022")
-
-                        Text(
-                            text = "10:20",
-                            modifier = Modifier.padding(start = 20.dp),
-                        )
-
-                        Icon(
-                            Icons.Rounded.WbSunny,
-                            contentDescription = null
-                        )
-
-                        Text(
-                            text = "20:23",
-                            fontWeight = FontWeight.Bold
-                        )
-
-                        Text(text = "07:20", modifier = Modifier.padding(start = 40.dp))
-
-                        Icon(
-                            Icons.Rounded.WbSunny,
-                            contentDescription = null
-                        )
-
-                        Text(
-                            text = "17:33",
-                        )
-
-                    }
-
-
                 }
             }
         }
     )
 }
 
-@Composable
-@Preview
-private fun ShowScreen() {
-    val airportInfoResponse = AirportInfoResponse(
-        true,
-        "",
-        AirfieldsInfo(
-            "SBGO",
-            "Aeroporto Santa Genoveva Goiânia",
-            "Goiânia/GO",
-            "49º 13'20'' W",
-            "16º37'52'' S",
-            "16º37'52'' S / 49º 13'20'' W",
-            "METAR SBGO 181200Z 21004KT CAVOK 21/10 Q1022=",
-            "18/07/2022 12:00(UTC)",
-            "21ºC",
-            "49%",
-            "Maior ou igual à 10km",
-            "Não há formação de teto",
-            "Claro",
-            "Sem tempo significativo",
-            "210º com 4KT ou 7km/h"
-        )
-    )
-    InfoContent(airportInfoResponse)
-}
+//@Composable
+//@Preview
+//private fun ShowScreen() {
+//    val airportInfoResponse = AirportInfoResponse(
+//        true,
+//        "",
+//        AirfieldsInfo(
+//            "SBGO",
+//            "Aeroporto Santa Genoveva Goiânia",
+//            "Goiânia/GO",
+//            "49º 13'20'' W",
+//            "16º37'52'' S",
+//            "16º37'52'' S / 49º 13'20'' W",
+//            "METAR SBGO 181200Z 21004KT CAVOK 21/10 Q1022=",
+//            "18/07/2022 12:00(UTC)",
+//            "21ºC",
+//            "49%",
+//            "Maior ou igual à 10km",
+//            "Não há formação de teto",
+//            "Claro",
+//            "Sem tempo significativo",
+//            "210º com 4KT ou 7km/h"
+//        )
+//    )
+//}
