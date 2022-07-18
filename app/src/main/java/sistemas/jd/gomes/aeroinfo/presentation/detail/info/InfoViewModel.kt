@@ -56,6 +56,7 @@ class InfoViewModel @Inject constructor(
         }
     }
 
+    // TODO: melhorar forma de fazer o map para o dto.
     private fun handleAirportResponse(
         airportInfoResponse: Response<AirportInfoResponse>,
         meteorologyResponse: Response<MeteorologyResponse>,

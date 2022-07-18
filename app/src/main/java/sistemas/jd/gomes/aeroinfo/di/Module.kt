@@ -7,6 +7,7 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import sistemas.jd.gomes.aeroinfo.data.remote.AirportApi
+import sistemas.jd.gomes.aeroinfo.data.remote.ChartsApi
 import sistemas.jd.gomes.aeroinfo.data.remote.MeteorologyApi
 import sistemas.jd.gomes.aeroinfo.data.remote.SunriseDayApi
 import sistemas.jd.gomes.aeroinfo.util.Constants
@@ -53,8 +54,14 @@ object Module {
 
     @Singleton
     @Provides
-    fun provideServiceSunsetDay(retrofit: Retrofit): SunriseDayApi {
+    fun provideServiceSunsetDayApi(retrofit: Retrofit): SunriseDayApi {
         return retrofit.create(SunriseDayApi::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideServiceChartsApi(retrofit: Retrofit) : ChartsApi {
+        return retrofit.create(ChartsApi::class.java)
     }
 
 }

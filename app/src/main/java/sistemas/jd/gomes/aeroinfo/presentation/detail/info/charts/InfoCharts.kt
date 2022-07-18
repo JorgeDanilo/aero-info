@@ -7,22 +7,43 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import sistemas.jd.gomes.aeroinfo.R
+import androidx.hilt.navigation.compose.hiltViewModel
+import sistemas.jd.gomes.aeroinfo.data.model.Chart
+import sistemas.jd.gomes.aeroinfo.presentation.component.LoadingProgressBar
 import sistemas.jd.gomes.aeroinfo.ui.theme.BlueDark
+import sistemas.jd.gomes.aeroinfo.util.ResourceState
 
 
 @Composable
-fun InfoCharts() {
+fun InfoCharts(
+    infoChartsViewModel: ChartsViewModel = hiltViewModel()
+) {
+
+    val result by infoChartsViewModel.chartsInfo.collectAsState()
+    when (result) {
+        is ResourceState.Success -> {
+            InfoChartContents(result.data)
+        }
+        is ResourceState.Loading -> {
+            LoadingProgressBar()
+        }
+        else -> {}
+    }
+}
+
+@Composable
+fun InfoChartContents(chart: Chart?) {
+    chart?.itemChart?.sortBy { it.type }
     Scaffold(
         backgroundColor = MaterialTheme.colors.BlueDark,
         contentColor = Color.White,
@@ -60,99 +81,13 @@ fun InfoCharts() {
                         .padding(start = 8.dp, top = 8.dp, end = 8.dp, bottom = 50.dp),
                     horizontalAlignment = Alignment.Start
                 ) {
-                    Text(text = "ADC")
-                    Button(onClick = { /*TODO*/ }, modifier = Modifier.fillMaxWidth()) {
-                        Text(text = "ADC SBSP")
+                    chart?.itemChart?.forEach { itemChart ->
+                        Text(text = itemChart.type?.name!!)
+                        Button(onClick = { /*TODO*/ }, modifier = Modifier.fillMaxWidth()) {
+                            Text(text = itemChart.nome)
+                        }
+                        Spacer(modifier = Modifier.height(8.dp))
                     }
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    Text(text = "AOC")
-                    Button(onClick = { /*TODO*/ }, modifier = Modifier.fillMaxWidth()) {
-                        Text(text = "AD 2 SBSP A")
-                    }
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    Text(text = "IAC")
-                    Button(onClick = { /*TODO*/ }, modifier = Modifier.fillMaxWidth()) {
-                        Text(text = "IAC ILS R OU/OR LOC R RWR 3L")
-                    }
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    Button(onClick = { /*TODO*/ }, modifier = Modifier.fillMaxWidth()) {
-                        Text(text = "ILS V RWY 35L")
-                    }
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    Button(onClick = { /*TODO*/ }, modifier = Modifier.fillMaxWidth()) {
-                        Text(text = "ILS X RWY 17 R")
-                    }
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    Button(onClick = { /*TODO*/ }, modifier = Modifier.fillMaxWidth()) {
-                        Text(text = "ILS Y OR LOC Y RWY 17R")
-                    }
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    Button(onClick = { /*TODO*/ }, modifier = Modifier.fillMaxWidth()) {
-                        Text(text = "RNP S RWY 35R")
-                    }
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    Button(onClick = { /*TODO*/ }, modifier = Modifier.fillMaxWidth()) {
-                        Text(text = "RNP T RWY 17L")
-                    }
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    Button(onClick = { /*TODO*/ }, modifier = Modifier.fillMaxWidth()) {
-                        Text(text = "RNP X RWY 35L (AR)")
-                    }
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    Button(onClick = { /*TODO*/ }, modifier = Modifier.fillMaxWidth()) {
-                        Text(text = "RNP Y RWY 17R")
-                    }
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    Button(onClick = { /*TODO*/ }, modifier = Modifier.fillMaxWidth()) {
-                        Text(text = "RNP Z RWY 35L")
-                    }
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    Button(onClick = { /*TODO*/ }, modifier = Modifier.fillMaxWidth()) {
-                        Text(text = "VOR Y RWY 35L/35R" )
-                    }
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    Button(onClick = { /*TODO*/ }, modifier = Modifier.fillMaxWidth()) {
-                        Text(text = "VOR Z RWY 17L/17R" )
-                    }
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    Text(text = "PDC")
-                    Button(onClick = { /*TODO*/ }, modifier = Modifier.fillMaxWidth()) {
-                        Text(text = "PDC SBSP" )
-                    }
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    Text(text = "SID")
-                    Button(onClick = { /*TODO*/ }, modifier = Modifier.fillMaxWidth()) {
-                        Text(text = "OMNI RWY 17L/17R 35L/35R" )
-                    }
-
                 }
             }
         }
