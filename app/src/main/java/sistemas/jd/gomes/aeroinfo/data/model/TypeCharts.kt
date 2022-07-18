@@ -16,5 +16,19 @@ enum class TypeCharts {
     IAC,
 
     @Element(name = "SID")
-    SID
+    SID,
+
+    @Element(name = "AOC")
+    AOC,
+
+    @Element(name = "PDC")
+    PDC,
+
+    @Element(name = "GMC")
+    GMC,
+
+    @Element(name = "PATC")
+    PATC
+
+
 }

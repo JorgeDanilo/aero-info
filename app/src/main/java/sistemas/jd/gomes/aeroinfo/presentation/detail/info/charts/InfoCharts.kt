@@ -37,6 +37,9 @@ fun InfoCharts(
         is ResourceState.Loading -> {
             LoadingProgressBar()
         }
+        is ResourceState.Error -> {
+
+        }
         else -> {}
     }
 }

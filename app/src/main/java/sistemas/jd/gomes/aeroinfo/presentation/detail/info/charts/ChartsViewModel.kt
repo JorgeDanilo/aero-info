@@ -27,7 +27,7 @@ class ChartsViewModel @Inject constructor(
         viewModelScope.launch {
             _chartsInfo.value = ResourceState.Loading()
             try {
-                var response = chartsRepository.getCharts(SearchDTO.icaoCode)
+                val response = chartsRepository.getCharts(SearchDTO.icaoCode)
                 _chartsInfo.value = handleResponse(response)
             } catch (t: Throwable) {
                 when (t) {

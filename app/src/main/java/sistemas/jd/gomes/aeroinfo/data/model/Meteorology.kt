@@ -7,8 +7,8 @@ import org.simpleframework.xml.Root
 class Meteorology @JvmOverloads constructor(
     @field: Element(name = "loc")
     var loc: String = "",
-    @field: Element(name = "metar")
+    @field: Element(name = "metar", required = false)
     var metar: String = "",
-    @field: Element(name = "taf")
-    var taf: String = ""
+    @field: Element(name = "taf", required = false)
+    var taf: String? = ""
 )
