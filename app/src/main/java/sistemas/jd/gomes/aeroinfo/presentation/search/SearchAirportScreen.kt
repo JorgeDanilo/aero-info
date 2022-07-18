@@ -27,6 +27,7 @@ import sistemas.jd.gomes.aeroinfo.presentation.detail.info.general.Screen
 import sistemas.jd.gomes.aeroinfo.ui.theme.BlueDark
 import sistemas.jd.gomes.aeroinfo.ui.theme.GrayPrimary
 import sistemas.jd.gomes.aeroinfo.util.ResourceState
+import sistemas.jd.gomes.aeroinfo.util.timeNow
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -294,21 +295,25 @@ fun ListAirportItem(
                     fontWeight = FontWeight.Bold
                 )
 
-                if (infoAirport[4] == "g") {
-                    Text(
-                        text = ">= 5000m",
-                        modifier = Modifier.padding(start = 5.dp, top = 2.dp),
-                    )
-                } else if (infoAirport[4] == "y") {
-                    Text(
-                        text = "< 5000 e >= 1500m",
-                        modifier = Modifier.padding(start = 5.dp, top = 2.dp),
-                    )
-                } else if (infoAirport[4] == "r") {
-                    Text(
-                        text = "< 1500m",
-                        modifier = Modifier.padding(start = 5.dp, top = 2.dp),
-                    )
+                when {
+                    infoAirport[4] == "g" -> {
+                        Text(
+                            text = ">= 5000m",
+                            modifier = Modifier.padding(start = 5.dp, top = 2.dp),
+                        )
+                    }
+                    infoAirport[4] == "y" -> {
+                        Text(
+                            text = "< 5000 e >= 1500m",
+                            modifier = Modifier.padding(start = 5.dp, top = 2.dp),
+                        )
+                    }
+                    infoAirport[4] == "r" -> {
+                        Text(
+                            text = "< 1500m",
+                            modifier = Modifier.padding(start = 5.dp, top = 2.dp),
+                        )
+                    }
                 }
 
             }
@@ -320,21 +325,25 @@ fun ListAirportItem(
                     fontWeight = FontWeight.Bold
                 )
 
-                if (infoAirport[4] == "g") {
-                    Text(
-                        text = ">= 1500m",
-                        modifier = Modifier.padding(start = 5.dp, top = 2.dp),
-                    )
-                } else if (infoAirport[4] == "y") {
-                    Text(
-                        text = "< 1500m e > 500m",
-                        modifier = Modifier.padding(start = 5.dp, top = 2.dp),
-                    )
-                } else if (infoAirport[4] == "r") {
-                    Text(
-                        text = "< 600m",
-                        modifier = Modifier.padding(start = 5.dp, top = 2.dp),
-                    )
+                when {
+                    infoAirport[4] == "g" -> {
+                        Text(
+                            text = ">= 1500m",
+                            modifier = Modifier.padding(start = 5.dp, top = 2.dp),
+                        )
+                    }
+                    infoAirport[4] == "y" -> {
+                        Text(
+                            text = "< 1500m e > 500m",
+                            modifier = Modifier.padding(start = 5.dp, top = 2.dp),
+                        )
+                    }
+                    infoAirport[4] == "r" -> {
+                        Text(
+                            text = "< 600m",
+                            modifier = Modifier.padding(start = 5.dp, top = 2.dp),
+                        )
+                    }
                 }
             }
 
@@ -360,10 +369,4 @@ fun ListAirportItem(
             )
         }
     }
-}
-
-fun timeNow(): String {
-    val c: Calendar = Calendar.getInstance()
-    val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm")
-    return sdf.format(c.time)
 }

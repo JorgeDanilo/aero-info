@@ -15,6 +15,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Brush
@@ -30,6 +31,7 @@ import sistemas.jd.gomes.aeroinfo.ui.theme.Color3
 import sistemas.jd.gomes.aeroinfo.ui.theme.Color4
 
 @Composable
+@OptIn(ExperimentalComposeUiApi::class)
 fun SplashScreen(
     navController: NavHostController,
 ) {
