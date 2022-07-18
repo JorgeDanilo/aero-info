@@ -143,7 +143,7 @@ fun ListAirportItem(
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 6.dp, start = 6.dp, end = 6.dp)
-            .height(290.dp)
+            .height(320.dp)
     ) {
         Column(modifier = Modifier
             .padding(all = 6.dp)

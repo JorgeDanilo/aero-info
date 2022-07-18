@@ -146,7 +146,7 @@ private fun InfoContent(airportInfo: AirportDto) {
                             contentDescription = null,
                         )
                         Text(
-                            text = "xxxx hpa",
+                            text = "xxxx hpa", // TODO: pegar de algum lugar ?
                             modifier = Modifier.padding(start = 5.dp, top = 2.dp),
                         )
 
