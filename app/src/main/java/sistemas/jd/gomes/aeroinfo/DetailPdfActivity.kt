@@ -20,6 +20,10 @@ class DetailPdfActivity : ComponentActivity() {
             .enableSwipe(true)
             .enableDoubletap(true)
             .load()
+    }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
     }
 }

@@ -5,24 +5,24 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import sistemas.jd.gomes.aeroinfo.presentation.detail.info.BottomNavItem
-import sistemas.jd.gomes.aeroinfo.presentation.detail.info.charts.InfoCharts
-import sistemas.jd.gomes.aeroinfo.presentation.detail.info.general.InfoGeneral
+import sistemas.jd.gomes.aeroinfo.presentation.detail.info.charts.InfoChartsScreen
+import sistemas.jd.gomes.aeroinfo.presentation.detail.info.general.InfoGeneralScreen
 import sistemas.jd.gomes.aeroinfo.presentation.detail.info.rotaer.InfoRotaer
-import sistemas.jd.gomes.aeroinfo.presentation.detail.info.weather.InfoWeather
+import sistemas.jd.gomes.aeroinfo.presentation.detail.info.weather.InfoWeatherScreen
 
 @Composable
 fun BottomNavigationGraph(navController: NavHostController) {
     NavHost(navController, startDestination = BottomNavItem.INFO_WEATHER.screeRoute) {
         composable(BottomNavItem.INFO_WEATHER.screeRoute) {
-            InfoWeather()
+            InfoWeatherScreen()
         }
 
         composable(BottomNavItem.INFO_GENERAL.screeRoute) {
-            InfoGeneral()
+            InfoGeneralScreen()
         }
 
         composable(BottomNavItem.INFO_CHARTS.screeRoute) {
-            InfoCharts()
+            InfoChartsScreen()
         }
 
         composable(BottomNavItem.INFO_ROTAER.screeRoute) {

@@ -5,7 +5,7 @@ import org.simpleframework.xml.Root
 
 @Root(name = "met", strict = false)
 class Meteorology @JvmOverloads constructor(
-    @field: Element(name = "loc")
+    @field: Element(name = "loc", required = false)
     var loc: String = "",
     @field: Element(name = "metar", required = false)
     var metar: String = "",

@@ -1,4 +1,4 @@
-package sistemas.jd.gomes.aeroinfo.presentation.detail.info
+package sistemas.jd.gomes.aeroinfo.presentation.detail.info.weather
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -24,7 +24,7 @@ import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
-class InfoViewModel @Inject constructor(
+class InfoWeatherViewModel @Inject constructor(
     private val aiportRepository: AiportRepository,
     private val metereolgyRepository: MetereolgyRepository,
     private val sunsetDayRepository: SunsetDayRepository

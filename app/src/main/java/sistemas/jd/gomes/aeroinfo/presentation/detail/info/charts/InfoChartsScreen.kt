@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import sistemas.jd.gomes.aeroinfo.DetailPdfActivity
 import sistemas.jd.gomes.aeroinfo.data.model.Chart
+import sistemas.jd.gomes.aeroinfo.presentation.component.ErrorScreen
 import sistemas.jd.gomes.aeroinfo.presentation.component.LoadingProgressBar
 import sistemas.jd.gomes.aeroinfo.ui.theme.BlueDark
 import sistemas.jd.gomes.aeroinfo.util.ResourceState
@@ -31,7 +32,7 @@ import sistemas.jd.gomes.aeroinfo.util.SearchDTO
 
 @RequiresApi(Build.VERSION_CODES.Q)
 @Composable
-fun InfoCharts(
+fun InfoChartsScreen(
     infoChartsViewModel: ChartsViewModel = hiltViewModel()
 ) {
 
@@ -49,11 +50,7 @@ fun InfoCharts(
             LoadingProgressBar()
         }
         is ResourceState.Error -> {
-            Box(modifier = Modifier.fillMaxSize(),
-                content = {
-                    Text(text = chatResponseStream.message!!)
-                }
-            )
+            ErrorScreen(message = chatResponseStream.message)
         }
         else -> {}
     }

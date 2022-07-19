@@ -3,7 +3,6 @@ package sistemas.jd.gomes.aeroinfo.presentation.detail.info.weather
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
@@ -25,16 +24,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import sistemas.jd.gomes.aeroinfo.data.model.AirportDto
-import sistemas.jd.gomes.aeroinfo.presentation.detail.info.InfoViewModel
+import sistemas.jd.gomes.aeroinfo.presentation.component.ErrorScreen
 import sistemas.jd.gomes.aeroinfo.ui.theme.BlueDark
 import sistemas.jd.gomes.aeroinfo.ui.theme.GrayPrimary
 import sistemas.jd.gomes.aeroinfo.util.ResourceState
 
 @Composable
-fun InfoWeather(
-    infoViewModel: InfoViewModel = hiltViewModel()
+fun InfoWeatherScreen(
+    infoWeatherViewModel: InfoWeatherViewModel = hiltViewModel()
 ) {
-    val result by infoViewModel.infoAirport.collectAsState()
+    val result by infoWeatherViewModel.infoAirport.collectAsState()
     when (result) {
         is ResourceState.Success -> {
             result.data?.let { InfoContent(it) }
@@ -46,6 +45,10 @@ fun InfoWeather(
             ) {
                 CircularProgressIndicator()
             }
+        }
+
+        is ResourceState.Error -> {
+            ErrorScreen(message = result.message)
         }
         else -> {}
     }
@@ -77,26 +80,15 @@ private fun InfoContent(airportInfo: AirportDto) {
             ) {
                 Spacer(modifier = Modifier.height(28.dp))
                 Row {
-                    Card(
-                        shape = CircleShape,
-                        backgroundColor = Color.Green,
-                        modifier = Modifier.padding(top = 10.dp, end = 5.dp)
-                    ) {
-                        Divider(
-                            modifier = Modifier
-                                .height(10.dp)
-                                .width(10.dp)
-                        )
-                    }
                     Text(
                         text = airportInfo.nome,
                         color = Color.White,
                         fontWeight = FontWeight.Bold,
-                        fontSize = 22.sp
+                        fontSize = 18.sp
                     )
                 }
                 Text(
-                    text = "º ${airportInfo.localizacao}",
+                    text = airportInfo.localizacao,
                     color = Color.Gray,
                 )
 
@@ -333,29 +325,3 @@ private fun InfoContent(airportInfo: AirportDto) {
         }
     )
 }
-
-//@Composable
-//@Preview
-//private fun ShowScreen() {
-//    val airportInfoResponse = AirportInfoResponse(
-//        true,
-//        "",
-//        AirfieldsInfo(
-//            "SBGO",
-//            "Aeroporto Santa Genoveva Goiânia",
-//            "Goiânia/GO",
-//            "49º 13'20'' W",
-//            "16º37'52'' S",
-//            "16º37'52'' S / 49º 13'20'' W",
-//            "METAR SBGO 181200Z 21004KT CAVOK 21/10 Q1022=",
-//            "18/07/2022 12:00(UTC)",
-//            "21ºC",
-//            "49%",
-//            "Maior ou igual à 10km",
-//            "Não há formação de teto",
-//            "Claro",
-//            "Sem tempo significativo",
-//            "210º com 4KT ou 7km/h"
-//        )
-//    )
-//}

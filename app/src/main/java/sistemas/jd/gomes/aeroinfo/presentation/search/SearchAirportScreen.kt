@@ -23,6 +23,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import sistemas.jd.gomes.aeroinfo.R
+import sistemas.jd.gomes.aeroinfo.presentation.component.ErrorScreen
+import sistemas.jd.gomes.aeroinfo.presentation.component.LoadingProgressBar
 import sistemas.jd.gomes.aeroinfo.presentation.detail.info.general.Screen
 import sistemas.jd.gomes.aeroinfo.ui.theme.BlueDark
 import sistemas.jd.gomes.aeroinfo.ui.theme.GrayPrimary
@@ -113,22 +115,11 @@ fun ListAirportContent(viewModel: SearchViewModel, navController: NavHostControl
                 }
             }
             is ResourceState.Loading -> {
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    CircularProgressIndicator()
-                }
+                LoadingProgressBar()
             }
 
             is ResourceState.Error -> {
-                airports.value.data?.message?.let {
-                    Box(modifier = Modifier.fillMaxSize(),
-                        content = {
-                            Text(text = it)
-                        }
-                    )
-                }
+                ErrorScreen(message = airports.value.data?.message)
             }
             else -> {}
         }
