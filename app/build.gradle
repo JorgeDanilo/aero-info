@@ -98,4 +98,6 @@ dependencies {
 //    Icons
     implementation "androidx.compose.material:material-icons-extended:$compose_version"
 
+    implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
+
 }

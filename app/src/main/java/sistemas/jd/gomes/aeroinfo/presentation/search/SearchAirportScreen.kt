@@ -28,7 +28,6 @@ import sistemas.jd.gomes.aeroinfo.ui.theme.BlueDark
 import sistemas.jd.gomes.aeroinfo.ui.theme.GrayPrimary
 import sistemas.jd.gomes.aeroinfo.util.DateUtil.timeNow
 import sistemas.jd.gomes.aeroinfo.util.ResourceState
-import java.util.*
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -123,8 +122,12 @@ fun ListAirportContent(viewModel: SearchViewModel, navController: NavHostControl
             }
 
             is ResourceState.Error -> {
-                airports.value.data?.message.let {
-
+                airports.value.data?.message?.let {
+                    Box(modifier = Modifier.fillMaxSize(),
+                        content = {
+                            Text(text = it)
+                        }
+                    )
                 }
             }
             else -> {}

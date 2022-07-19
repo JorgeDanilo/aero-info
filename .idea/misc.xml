@@ -49,6 +49,8 @@
         <entry key="../../../../../../layout/compose-model-1658174483758.xml" value="0.1" />
         <entry key="../../../../.gradle/caches/transforms-3/f985ec0641a7bf7312966e8fb0188a4d/transformed/core-1.7.0/res/drawable/notification_bg_low.xml" value="0.1015" />
         <entry key="app/src/main/res/drawable/ic_get_runway.xml" value="0.1185" />
+        <entry key="app/src/main/res/layout/activity_detail_pdf.xml" value="0.2265625" />
+        <entry key="app/src/main/res/xml/provider_paths.xml" value="0.17395833333333333" />
       </map>
     </option>
   </component>

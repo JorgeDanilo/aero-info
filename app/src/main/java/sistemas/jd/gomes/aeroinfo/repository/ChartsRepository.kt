@@ -6,6 +6,6 @@ import javax.inject.Inject
 class ChartsRepository @Inject constructor(
     private val chartsApi: ChartsApi
 ) {
-
     suspend fun getCharts(icaoCode: String) = chartsApi.getCharts(icaoCode)
+    suspend fun downloadCharts(fileId: String) = chartsApi.downloadChart(fileId)
 }
