@@ -8,5 +8,4 @@ object Constants {
     const val API_KEY_AISWEB = "2104912643"
     const val API_PASS_AISWEB = "4f83ba91-7b72-11eb-9a71-0050569ac1e0"
     const val AIRPORT_REMOTE_KEYS_DATABASE_TABLE = "airport_remote_keys_table"
-    const val CHART_DATA = "CHART_DATA"
 }

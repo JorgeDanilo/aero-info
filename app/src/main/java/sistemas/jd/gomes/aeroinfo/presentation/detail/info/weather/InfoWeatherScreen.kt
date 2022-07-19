@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import sistemas.jd.gomes.aeroinfo.data.model.AirportDto
 import sistemas.jd.gomes.aeroinfo.presentation.component.ErrorScreen
+import sistemas.jd.gomes.aeroinfo.presentation.component.LoadingProgressBar
 import sistemas.jd.gomes.aeroinfo.ui.theme.BlueDark
 import sistemas.jd.gomes.aeroinfo.ui.theme.GrayPrimary
 import sistemas.jd.gomes.aeroinfo.util.ResourceState
@@ -39,12 +40,7 @@ fun InfoWeatherScreen(
             result.data?.let { InfoContent(it) }
         }
         is ResourceState.Loading -> {
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier.fillMaxSize()
-            ) {
-                CircularProgressIndicator()
-            }
+            LoadingProgressBar()
         }
 
         is ResourceState.Error -> {

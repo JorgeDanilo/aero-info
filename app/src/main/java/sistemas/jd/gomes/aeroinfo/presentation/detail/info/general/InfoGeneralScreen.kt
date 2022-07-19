@@ -9,20 +9,51 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import sistemas.jd.gomes.aeroinfo.data.model.Notam
+import sistemas.jd.gomes.aeroinfo.presentation.component.ErrorScreen
+import sistemas.jd.gomes.aeroinfo.presentation.component.LoadingProgressBar
 import sistemas.jd.gomes.aeroinfo.ui.theme.BlueDark
 import sistemas.jd.gomes.aeroinfo.ui.theme.GrayPrimary
+import sistemas.jd.gomes.aeroinfo.util.DateUtil
+import sistemas.jd.gomes.aeroinfo.util.ResourceState
 
 @Composable
-fun InfoGeneralScreen() {
+fun InfoGeneralScreen(
+    infoViewModel: InfoViewModel = hiltViewModel()
+) {
+
+    val result by infoViewModel.notam.collectAsState()
+
+    when (result) {
+        is ResourceState.Success -> {
+            InfoGeneralContent(result.data)
+        }
+        is ResourceState.Loading -> {
+            LoadingProgressBar()
+        }
+
+        is ResourceState.Error -> {
+            ErrorScreen(message = result.message)
+        }
+        else -> {}
+    }
+
+
+}
+
+@Composable
+fun InfoGeneralContent(data: Notam?) {
     Scaffold(
         backgroundColor = MaterialTheme.colors.BlueDark,
         contentColor = Color.White,
@@ -39,10 +70,12 @@ fun InfoGeneralScreen() {
 
             Column(
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .fillMaxSize()
                     .padding(all = 8.dp)
-                    .verticalScroll(rememberScrollState()),
-                horizontalAlignment = Alignment.CenterHorizontally,
+                    .verticalScroll(
+                        rememberScrollState()
+                    ),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Spacer(modifier = Modifier.height(28.dp))
                 Row {
@@ -59,7 +92,7 @@ fun InfoGeneralScreen() {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(all = 8.dp),
+                        .padding(start = 8.dp, top = 8.dp, end = 8.dp, bottom = 50.dp),
                     horizontalAlignment = Alignment.Start
                 ) {
                     Text(text = "FREQUÊNCIAS", color = MaterialTheme.colors.GrayPrimary)
@@ -107,331 +140,66 @@ fun InfoGeneralScreen() {
 
                     Text(text = "NOTAMs", color = MaterialTheme.colors.GrayPrimary)
 
-                    Row {
-                        Box(
-                            modifier = Modifier
-                                .background(color = Color.Blue)
-                                .padding(all = 5.dp)
-                        ) {
+                    data?.notamItem?.forEach { notamItem ->
+                        Row {
+                            Box(
+                                modifier = Modifier
+                                    .background(color = Color.Blue)
+                                    .padding(all = 5.dp)
+                            ) {
+                                Text(
+                                    text = notamItem.category,
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color.White
+                                )
+                            }
+
+                            Box(
+                                modifier = Modifier
+                                    .background(color = Color.Blue)
+                                    .padding(all = 5.dp)
+                            ) {
+                                Text(
+                                    text = notamItem.number,
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color.White
+                                )
+                            }
+
                             Text(
-                                text = "AGA",
-                                fontWeight = FontWeight.Bold,
-                                color = Color.White
+                                modifier = Modifier.padding(all = 5.dp),
+                                text = "Emitido em ${notamItem.datePublished}",
+                                color = MaterialTheme.colors.GrayPrimary,
+                                fontStyle = FontStyle.Italic,
+                                fontSize = 12.sp
                             )
                         }
 
-                        Box(
-                            modifier = Modifier
-                                .background(color = Color.Blue)
-                                .padding(all = 5.dp)
-                        ) {
+                        Row {
                             Text(
-                                text = "D0817/22",
-                                fontWeight = FontWeight.Bold,
-                                color = Color.White
+                                text = notamItem.informationNotam,
+                                fontWeight = FontWeight.Bold
                             )
                         }
 
-                        Text(
-                            modifier = Modifier.padding(all = 5.dp),
-                            text = "Emitido em 2022-05-24 13:23:43",
-                            color = MaterialTheme.colors.GrayPrimary,
-                            fontStyle = FontStyle.Italic,
-                            fontSize = 12.sp
-                        )
-                    }
-
-                    Row {
-                        Text(
-                            text = "TWY NOVEMBER E MIKE CLSD NO TRAVES DA PSN 13 DEVIDO OBRAS",
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-
-                    Row {
-                        Icon(
-                            Icons.Default.DateRange,
-                            contentDescription = null
-                        )
-                        Text(
-                            "21/06/22 02:00 → 25/06/22 09:00 UTC"
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.height(6.dp))
-
-                    Row {
-                        Box(
-                            modifier = Modifier
-                                .background(color = Color.Blue)
-                                .padding(all = 5.dp)
-                        ) {
+                        Row {
+                            Icon(
+                                Icons.Default.DateRange,
+                                contentDescription = null
+                            )
                             Text(
-                                text = "AGA",
-                                fontWeight = FontWeight.Bold,
-                                color = Color.White
+                                "${DateUtil.formatDate(notamItem.startDateEffective)} → ${
+                                    DateUtil.formatDate(
+                                        notamItem.endDateEffective
+                                    )
+                                } UTC"
                             )
                         }
 
-                        Box(
-                            modifier = Modifier
-                                .background(color = Color.Blue)
-                                .padding(all = 5.dp)
-                        ) {
-                            Text(
-                                text = "D0818/22",
-                                fontWeight = FontWeight.Bold,
-                                color = Color.White
-                            )
-                        }
-
-                        Text(
-                            modifier = Modifier.padding(all = 5.dp),
-                            text = "Emitido em 2022-05-24 13:25:27",
-                            color = MaterialTheme.colors.GrayPrimary,
-                            fontStyle = FontStyle.Italic,
-                            fontSize = 12.sp
-                        )
+                        Spacer(modifier = Modifier.height(10.dp))
                     }
-
-                    Row {
-                        Text(
-                            text = "TWY NOVEMBER E MIKE CLSD NO TRAVES DA PSN 12 DEVIDO OBRAS",
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-
-                    Row {
-                        Icon(
-                            Icons.Default.DateRange,
-                            contentDescription = null
-                        )
-                        Text(
-                            "27/06/22 02:00 → 01/07/22 09:00 UTC"
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.height(6.dp))
-
-                    Row {
-                        Box(
-                            modifier = Modifier
-                                .background(color = Color.Blue)
-                                .padding(all = 5.dp)
-                        ) {
-                            Text(
-                                text = "AGA",
-                                fontWeight = FontWeight.Bold,
-                                color = Color.White
-                            )
-                        }
-
-                        Box(
-                            modifier = Modifier
-                                .background(color = Color.Blue)
-                                .padding(all = 5.dp)
-                        ) {
-                            Text(
-                                text = "D0818/22",
-                                fontWeight = FontWeight.Bold,
-                                color = Color.White
-                            )
-                        }
-
-                        Text(
-                            modifier = Modifier.padding(all = 5.dp),
-                            text = "Emitido em 2022-05-24 13:25:27",
-                            color = MaterialTheme.colors.GrayPrimary,
-                            fontStyle = FontStyle.Italic,
-                            fontSize = 12.sp
-                        )
-                    }
-
-                    Row {
-                        Text(
-                            text = "TWY NOVEMBER E MIKE CLSD NO TRAVES DA PSN 12 DEVIDO OBRAS",
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-
-                    Row {
-                        Icon(
-                            Icons.Default.DateRange,
-                            contentDescription = null
-                        )
-                        Text(
-                            "27/06/22 02:00 → 01/07/22 09:00 UTC"
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.height(6.dp))
-
-                    Row {
-                        Box(
-                            modifier = Modifier
-                                .background(color = Color.Blue)
-                                .padding(all = 5.dp)
-                        ) {
-                            Text(
-                                text = "AGA",
-                                fontWeight = FontWeight.Bold,
-                                color = Color.White
-                            )
-                        }
-
-                        Box(
-                            modifier = Modifier
-                                .background(color = Color.Blue)
-                                .padding(all = 5.dp)
-                        ) {
-                            Text(
-                                text = "D0818/22",
-                                fontWeight = FontWeight.Bold,
-                                color = Color.White
-                            )
-                        }
-
-                        Text(
-                            modifier = Modifier.padding(all = 5.dp),
-                            text = "Emitido em 2022-05-24 13:25:27",
-                            color = MaterialTheme.colors.GrayPrimary,
-                            fontStyle = FontStyle.Italic,
-                            fontSize = 12.sp
-                        )
-                    }
-
-                    Row {
-                        Text(
-                            text = "TWY NOVEMBER E MIKE CLSD NO TRAVES DA PSN 12 DEVIDO OBRAS",
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-
-                    Row {
-                        Icon(
-                            Icons.Default.DateRange,
-                            contentDescription = null
-                        )
-                        Text(
-                            "27/06/22 02:00 → 01/07/22 09:00 UTC"
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.height(6.dp))
-
-                    Row {
-                        Box(
-                            modifier = Modifier
-                                .background(color = Color.Blue)
-                                .padding(all = 5.dp)
-                        ) {
-                            Text(
-                                text = "AGA",
-                                fontWeight = FontWeight.Bold,
-                                color = Color.White
-                            )
-                        }
-
-                        Box(
-                            modifier = Modifier
-                                .background(color = Color.Blue)
-                                .padding(all = 5.dp)
-                        ) {
-                            Text(
-                                text = "D0818/22",
-                                fontWeight = FontWeight.Bold,
-                                color = Color.White
-                            )
-                        }
-
-                        Text(
-                            modifier = Modifier.padding(all = 5.dp),
-                            text = "Emitido em 2022-05-24 13:25:27",
-                            color = MaterialTheme.colors.GrayPrimary,
-                            fontStyle = FontStyle.Italic,
-                            fontSize = 12.sp
-                        )
-                    }
-
-                    Row {
-                        Text(
-                            text = "TWY NOVEMBER E MIKE CLSD NO TRAVES DA PSN 12 DEVIDO OBRAS",
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-
-                    Row {
-                        Icon(
-                            Icons.Default.DateRange,
-                            contentDescription = null
-                        )
-                        Text(
-                            "27/06/22 02:00 → 01/07/22 09:00 UTC"
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.height(6.dp))
-
-                    Row {
-                        Box(
-                            modifier = Modifier
-                                .background(color = Color.Blue)
-                                .padding(all = 5.dp)
-                        ) {
-                            Text(
-                                text = "AGA",
-                                fontWeight = FontWeight.Bold,
-                                color = Color.White
-                            )
-                        }
-
-                        Box(
-                            modifier = Modifier
-                                .background(color = Color.Blue)
-                                .padding(all = 5.dp)
-                        ) {
-                            Text(
-                                text = "D0818/22",
-                                fontWeight = FontWeight.Bold,
-                                color = Color.White
-                            )
-                        }
-
-                        Text(
-                            modifier = Modifier.padding(all = 5.dp),
-                            text = "Emitido em 2022-05-24 13:25:27",
-                            color = MaterialTheme.colors.GrayPrimary,
-                            fontStyle = FontStyle.Italic,
-                            fontSize = 12.sp
-                        )
-                    }
-
-                    Row {
-                        Text(
-                            text = "TWY NOVEMBER E MIKE CLSD NO TRAVES DA PSN 12 DEVIDO OBRAS",
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-
-                    Row {
-                        Icon(
-                            Icons.Default.DateRange,
-                            contentDescription = null
-                        )
-                        Text(
-                            "27/06/22 02:00 → 01/07/22 09:00 UTC"
-                        )
-                    }
-
                 }
             }
         }
     )
 }
-
-@Composable
-@Preview
-private fun ShowScreen() {
-    InfoGeneralScreen()
-}
-

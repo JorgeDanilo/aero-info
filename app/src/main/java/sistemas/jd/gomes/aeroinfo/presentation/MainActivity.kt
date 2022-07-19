@@ -1,4 +1,4 @@
-package sistemas.jd.gomes.aeroinfo
+package sistemas.jd.gomes.aeroinfo.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

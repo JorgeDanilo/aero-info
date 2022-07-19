@@ -1,9 +1,10 @@
-package sistemas.jd.gomes.aeroinfo
+package sistemas.jd.gomes.aeroinfo.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import com.github.barteksc.pdfviewer.PDFView
 import dagger.hilt.android.AndroidEntryPoint
+import sistemas.jd.gomes.aeroinfo.R
 import sistemas.jd.gomes.aeroinfo.util.SearchDTO
 
 

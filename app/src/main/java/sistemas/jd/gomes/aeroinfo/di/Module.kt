@@ -6,10 +6,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
-import sistemas.jd.gomes.aeroinfo.data.remote.AirportApi
-import sistemas.jd.gomes.aeroinfo.data.remote.ChartsApi
-import sistemas.jd.gomes.aeroinfo.data.remote.MeteorologyApi
-import sistemas.jd.gomes.aeroinfo.data.remote.SunriseDayApi
+import sistemas.jd.gomes.aeroinfo.data.remote.*
 import sistemas.jd.gomes.aeroinfo.util.Constants
 import sistemas.jd.gomes.aeroinfo.util.XmlOrJsonConverterFactory
 import java.util.concurrent.TimeUnit
@@ -60,8 +57,14 @@ object Module {
 
     @Singleton
     @Provides
-    fun provideServiceChartsApi(retrofit: Retrofit) : ChartsApi {
+    fun provideServiceChartsApi(retrofit: Retrofit): ChartsApi {
         return retrofit.create(ChartsApi::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideServiceNotamApi(retrofit: Retrofit): NotamApi {
+        return retrofit.create(NotamApi::class.java)
     }
 
 }

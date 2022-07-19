@@ -1,4 +1,4 @@
-package sistemas.jd.gomes.aeroinfo.presentation.detail.info.general
+package sistemas.jd.gomes.aeroinfo.presentation
 
 import sistemas.jd.gomes.aeroinfo.util.SearchDTO
 

@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import sistemas.jd.gomes.aeroinfo.R
-import sistemas.jd.gomes.aeroinfo.presentation.detail.info.general.Screen
+import sistemas.jd.gomes.aeroinfo.presentation.Screen
 import sistemas.jd.gomes.aeroinfo.ui.theme.BlueDark
 import sistemas.jd.gomes.aeroinfo.ui.theme.Color3
 import sistemas.jd.gomes.aeroinfo.ui.theme.Color4

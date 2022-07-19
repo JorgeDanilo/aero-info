@@ -21,7 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import sistemas.jd.gomes.aeroinfo.DetailPdfActivity
+import sistemas.jd.gomes.aeroinfo.presentation.DetailPdfActivity
 import sistemas.jd.gomes.aeroinfo.data.model.Chart
 import sistemas.jd.gomes.aeroinfo.presentation.component.ErrorScreen
 import sistemas.jd.gomes.aeroinfo.presentation.component.LoadingProgressBar
