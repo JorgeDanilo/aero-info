@@ -6,6 +6,7 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 import sistemas.jd.gomes.aeroinfo.data.model.AirportInfoResponse
 import sistemas.jd.gomes.aeroinfo.data.model.AirportResponse
+import sistemas.jd.gomes.aeroinfo.data.model.AirportsResponse
 import sistemas.jd.gomes.aeroinfo.util.Constants.API_KEY_REDMET
 import sistemas.jd.gomes.aeroinfo.util.Json
 
@@ -22,4 +23,8 @@ interface AirportApi {
     suspend fun getDetailAirports(
         @Query("localidade") icaoCode: String
     ): Response<AirportInfoResponse>
+
+    @GET("/aerodromos/?api_key=$API_KEY_REDMET&pais=Brasil")
+    @Json
+    suspend fun getAllAirports(): Response<AirportsResponse>
 }

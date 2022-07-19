@@ -23,9 +23,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import sistemas.jd.gomes.aeroinfo.R
+import sistemas.jd.gomes.aeroinfo.presentation.Screen
 import sistemas.jd.gomes.aeroinfo.presentation.component.ErrorScreen
 import sistemas.jd.gomes.aeroinfo.presentation.component.LoadingProgressBar
-import sistemas.jd.gomes.aeroinfo.presentation.Screen
+import sistemas.jd.gomes.aeroinfo.presentation.component.TextFieldWithDropDown
 import sistemas.jd.gomes.aeroinfo.ui.theme.BlueDark
 import sistemas.jd.gomes.aeroinfo.ui.theme.GrayPrimary
 import sistemas.jd.gomes.aeroinfo.util.DateUtil.timeNow
@@ -76,20 +77,38 @@ fun SearchAirportScreen(
                 )
             }
 
-            SearchTopBar(
-                text = searchQuery,
-                onTextChange = {
-                    searchViewModel.updateSearchQuery(query = it)
-                },
-                onSearchClicked = {
-                    searchViewModel.searchAirports(query = it).apply {
-                        keyboardController?.hide()
+//            SearchTopBar(
+//                text = searchQuery,
+//                onTextChange = {
+//                    searchViewModel.updateSearchQuery(query = it)
+//                },
+//                onSearchClicked = {
+//                    searchViewModel.searchAirports(query = it).apply {
+//                        keyboardController?.hide()
+//                    }
+//                },
+//                onCloseClicked = {
+//                    navController.popBackStack()
+//                }
+//            )
+
+
+            val allAirports = searchViewModel.allAirports.collectAsState()
+            when(allAirports.value) {
+                is ResourceState.Success -> {
+                    TextFieldWithDropDown(
+                        items = allAirports.value.data?.airports?.toList()!!,
+                        selectedValue = "",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp)
+                    ) { index ->
+                        println("$index was selected")
                     }
-                },
-                onCloseClicked = {
-                    navController.popBackStack()
                 }
-            )
+                else -> {}
+            }
+
             ListAirportContent(searchViewModel, navController)
         }
     )

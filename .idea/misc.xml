@@ -51,8 +51,11 @@
         <entry key="../../../../../../layout/compose-model-1658254986379.xml" value="0.30194256756756754" />
         <entry key="../../../../../../layout/compose-model-1658257334292.xml" value="0.1" />
         <entry key="../../../../.gradle/caches/transforms-3/f985ec0641a7bf7312966e8fb0188a4d/transformed/core-1.7.0/res/drawable/notification_bg_low.xml" value="0.1015" />
+        <entry key="../../../../Android/Sdk/platforms/android-32/data/res/layout/simple_expandable_list_item_1.xml" value="0.3572916666666667" />
         <entry key="app/src/main/res/drawable/ic_get_runway.xml" value="0.1185" />
         <entry key="app/src/main/res/layout/activity_detail_pdf.xml" value="0.2265625" />
+        <entry key="app/src/main/res/layout/item_selecte.xml" value="0.3572916666666667" />
+        <entry key="app/src/main/res/layout/text_input_field.xml" value="0.3572916666666667" />
         <entry key="app/src/main/res/xml/provider_paths.xml" value="0.17395833333333333" />
       </map>
     </option>

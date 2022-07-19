@@ -8,8 +8,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import retrofit2.Response
-import sistemas.jd.gomes.aeroinfo.data.model.AirportInfoResponse
 import sistemas.jd.gomes.aeroinfo.data.model.AirportResponse
+import sistemas.jd.gomes.aeroinfo.data.model.AirportsResponse
 import sistemas.jd.gomes.aeroinfo.repository.AiportRepository
 import sistemas.jd.gomes.aeroinfo.util.ResourceState
 import java.io.IOException
@@ -27,9 +27,38 @@ class SearchViewModel @Inject constructor(
         MutableStateFlow<ResourceState<AirportResponse>>(ResourceState.Empty())
     val airports: StateFlow<ResourceState<AirportResponse>> = _airports
 
+    private val _allAirports =
+        MutableStateFlow<ResourceState<AirportsResponse>>(ResourceState.Empty())
+    val allAirports: StateFlow<ResourceState<AirportsResponse>> = _allAirports
+
 
     fun updateSearchQuery(query: String) {
         _searchQuery.value = query
+    }
+
+    init {
+        viewModelScope.launch {
+            try {
+                val response = repository.getAll()
+                _allAirports.value = handleAllResponse(response)
+            } catch (e: Exception) {
+                when (e) {
+                    is IOException -> _allAirports.value = ResourceState.Error("Erro de conexão!")
+                    else -> _allAirports.value =
+                        ResourceState.Error("Ops, aconteceu algum erro tente novamente!")
+                }
+            }
+        }
+
+    }
+
+    private fun handleAllResponse(response: Response<AirportsResponse>): ResourceState<AirportsResponse> {
+        if (response.isSuccessful) {
+            response.body()?.let { values ->
+                return ResourceState.Success(values)
+            }
+        }
+        return ResourceState.Error(response.message())
     }
 
     fun searchAirports(query: String) {

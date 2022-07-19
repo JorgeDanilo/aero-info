@@ -8,4 +8,5 @@ class AiportRepository @Inject constructor(
 ) {
     suspend fun list(icaoCode: String? = null) = api.searchAirports(icaoCode)
     suspend fun getDetail(icaoCode: String) = api.getDetailAirports(icaoCode)
+    suspend fun getAll() = api.getAllAirports()
 }
