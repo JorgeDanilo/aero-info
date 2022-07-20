@@ -19,6 +19,8 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import sistemas.jd.gomes.aeroinfo.R
@@ -47,7 +49,7 @@ fun SearchWidget(
     onCloseClicked: () -> Unit
 ) {
     TextField(
-        value = text,
+        value = text.uppercase(),
         onValueChange = { value -> onTextChange(value) },
         placeholder = {
             Text(
@@ -88,7 +90,8 @@ fun SearchWidget(
             }
         },
         keyboardOptions = KeyboardOptions(
-            imeAction = ImeAction.Search,
+            capitalization = KeyboardCapitalization.Sentences,
+            imeAction = ImeAction.Search
         ),
         keyboardActions = KeyboardActions(
             onSearch = {
