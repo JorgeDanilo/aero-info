@@ -7,12 +7,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import retrofit2.Response
-import sistemas.jd.gomes.aeroinfo.data.model.AirportDto
-import sistemas.jd.gomes.aeroinfo.data.model.AirportInfoResponse
-import sistemas.jd.gomes.aeroinfo.data.model.MeteorologyResponse
-import sistemas.jd.gomes.aeroinfo.data.model.SunriseDayResponse
+import sistemas.jd.gomes.aeroinfo.data.model.*
 import sistemas.jd.gomes.aeroinfo.repository.AiportRepository
 import sistemas.jd.gomes.aeroinfo.repository.MetereolgyRepository
+import sistemas.jd.gomes.aeroinfo.repository.RotaerRepository
 import sistemas.jd.gomes.aeroinfo.repository.SunsetDayRepository
 import sistemas.jd.gomes.aeroinfo.util.DateUtil.formatDateToJson
 import sistemas.jd.gomes.aeroinfo.util.DateUtil.now
@@ -27,7 +25,8 @@ import javax.inject.Inject
 class InfoWeatherViewModel @Inject constructor(
     private val aiportRepository: AiportRepository,
     private val metereolgyRepository: MetereolgyRepository,
-    private val sunsetDayRepository: SunsetDayRepository
+    private val sunsetDayRepository: SunsetDayRepository,
+    private val rotarRepository: RotaerRepository
 ) : ViewModel() {
 
     private val _infoAirport =
@@ -43,8 +42,14 @@ class InfoWeatherViewModel @Inject constructor(
                 val sunsetResponse = sunsetDayRepository.getSunsetDay(
                     SearchDTO.icaoCode, timeNowToJson(), formatDateToJson(sumDays(now(), 3))
                 )
+                val rotaerResponse = rotarRepository.getRotaer(SearchDTO.icaoCode)
                 _infoAirport.value =
-                    handleAirportResponse(airportResponse, meteorologyResponse, sunsetResponse)
+                    handleAirportResponse(
+                        airportResponse,
+                        meteorologyResponse,
+                        sunsetResponse,
+                        rotaerResponse
+                    )
             } catch (t: Throwable) {
                 when (t) {
                     is IOException -> _infoAirport.value =
@@ -60,9 +65,12 @@ class InfoWeatherViewModel @Inject constructor(
     private fun handleAirportResponse(
         airportInfoResponse: Response<AirportInfoResponse>,
         meteorologyResponse: Response<MeteorologyResponse>,
-        sunsetResponse: Response<SunriseDayResponse>
+        sunsetResponse: Response<SunriseDayResponse>,
+        rotaerResponse: Response<RotaerResponse>
     ): ResourceState<AirportDto> {
-        if (airportInfoResponse.isSuccessful && meteorologyResponse.isSuccessful && sunsetResponse.isSuccessful) {
+        if (airportInfoResponse.isSuccessful && meteorologyResponse.isSuccessful &&
+            sunsetResponse.isSuccessful && rotaerResponse.isSuccessful
+        ) {
             val response = AirportDto(
                 airportInfoResponse.body()?.data?.localidade!!,
                 airportInfoResponse.body()?.data?.nome!!,
@@ -80,7 +88,8 @@ class InfoWeatherViewModel @Inject constructor(
                 airportInfoResponse.body()?.data?.ceu!!,
                 airportInfoResponse.body()?.data?.condicoesTempo!!,
                 airportInfoResponse.body()?.data?.vento!!,
-                sunsetResponse.body()?.sunriseDays!!
+                sunsetResponse.body()?.sunriseDays!!,
+                rotaerResponse.body()?.runways?.runwayItem?.get(0)?.identification!!
             )
             return ResourceState.Success(response)
         }

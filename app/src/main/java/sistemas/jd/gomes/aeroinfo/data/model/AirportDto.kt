@@ -17,5 +17,6 @@ data class AirportDto(
     var ceu: String,
     var condicoesTempo: String,
     var vento: String,
-    var sunsetDays: MutableList<SunriseDay> = mutableListOf()
+    var sunsetDays: MutableList<SunriseDay> = mutableListOf(),
+    var runwayDirection: String
 )

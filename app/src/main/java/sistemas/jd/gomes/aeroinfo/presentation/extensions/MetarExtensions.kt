@@ -27,6 +27,12 @@ fun String.getWindSpeed(): String {
     }
 }
 
+fun String.getRunwayDirection(): String {
+    this.let {
+        return this.subSequence(0, 2).toString() + "0"
+    }
+}
+
 
 private fun matchDetails(inputString: String, whatToFind: String, startIndex: Int = 0): Int {
     return inputString.indexOf(whatToFind, startIndex, ignoreCase = true)

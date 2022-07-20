@@ -4,7 +4,7 @@ import org.simpleframework.xml.Element
 import org.simpleframework.xml.Root
 
 @Root(name = "item")
-class NotaItem @JvmOverloads constructor(
+class NotamItem @JvmOverloads constructor(
 
     @field:Element(name = "cat", required = false)
     var category: String = "",

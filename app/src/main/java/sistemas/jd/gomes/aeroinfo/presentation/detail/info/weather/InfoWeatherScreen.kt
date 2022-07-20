@@ -28,6 +28,7 @@ import sistemas.jd.gomes.aeroinfo.presentation.component.DirectionWindRunway
 import sistemas.jd.gomes.aeroinfo.presentation.component.ErrorScreen
 import sistemas.jd.gomes.aeroinfo.presentation.component.LoadingProgressBar
 import sistemas.jd.gomes.aeroinfo.presentation.extensions.getPressure
+import sistemas.jd.gomes.aeroinfo.presentation.extensions.getRunwayDirection
 import sistemas.jd.gomes.aeroinfo.presentation.extensions.getWindDirection
 import sistemas.jd.gomes.aeroinfo.ui.theme.BlueDark
 import sistemas.jd.gomes.aeroinfo.ui.theme.GrayPrimary
@@ -330,7 +331,8 @@ private fun InfoContent(airportInfo: AirportDto) {
 
                     Row {
                         DirectionWindRunway(
-                            airportInfo.metar.getWindDirection().toString().toFloat()
+                            airportInfo.runwayDirection.getRunwayDirection().toFloat(),
+                            airportInfo.metar.getWindDirection().toFloat()
                         )
                     }
                 }

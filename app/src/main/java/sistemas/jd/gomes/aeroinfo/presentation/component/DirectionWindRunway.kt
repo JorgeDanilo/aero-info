@@ -11,6 +11,7 @@ import sistemas.jd.gomes.aeroinfo.R
 
 @Composable
 fun DirectionWindRunway(
+    runwayDirection: Float,
     windDirection: Float,
 ) {
     Box(
@@ -25,7 +26,7 @@ fun DirectionWindRunway(
             modifier = Modifier
                 .width(300.dp)
                 .height(300.dp)
-                .rotate(130f) // todo: get angle of runway...
+                .rotate(runwayDirection)
         )
 
         Image(

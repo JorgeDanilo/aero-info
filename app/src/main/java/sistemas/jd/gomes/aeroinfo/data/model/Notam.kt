@@ -8,5 +8,5 @@ class Notam @JvmOverloads constructor(
     @field:ElementList(
         name = "item",
         inline = true
-    ) var notamItem: MutableList<NotaItem> ?= mutableListOf()
+    ) var notamItem: MutableList<NotamItem> ?= mutableListOf()
 )

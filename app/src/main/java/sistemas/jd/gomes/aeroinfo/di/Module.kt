@@ -67,4 +67,10 @@ object Module {
         return retrofit.create(NotamApi::class.java)
     }
 
+    @Singleton
+    @Provides
+    fun provideServiceRotaerApi(retrofit: Retrofit): RotaerApi {
+        return retrofit.create(RotaerApi::class.java)
+    }
+
 }
