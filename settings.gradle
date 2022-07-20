@@ -15,5 +15,3 @@ dependencyResolutionManagement {
 }
 rootProject.name = "aeroinfo"
 include ':app'
-include ':data'
-include ':domain'

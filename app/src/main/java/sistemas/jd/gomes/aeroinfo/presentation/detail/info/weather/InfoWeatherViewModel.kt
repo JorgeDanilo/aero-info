@@ -50,7 +50,7 @@ class InfoWeatherViewModel @Inject constructor(
                     is IOException -> _infoAirport.value =
                         ResourceState.Error("Erro de conexão!")
                     else -> _infoAirport.value =
-                        ResourceState.Error("Ops, aconteceu algum erro tente novamente!")
+                        ResourceState.Error(t.message!!)
                 }
             }
         }
