@@ -24,8 +24,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import sistemas.jd.gomes.aeroinfo.data.model.AirportDto
+import sistemas.jd.gomes.aeroinfo.presentation.component.DirectionWindRunway
 import sistemas.jd.gomes.aeroinfo.presentation.component.ErrorScreen
 import sistemas.jd.gomes.aeroinfo.presentation.component.LoadingProgressBar
+import sistemas.jd.gomes.aeroinfo.presentation.extensions.getPressure
+import sistemas.jd.gomes.aeroinfo.presentation.extensions.getWindDirection
 import sistemas.jd.gomes.aeroinfo.ui.theme.BlueDark
 import sistemas.jd.gomes.aeroinfo.ui.theme.GrayPrimary
 import sistemas.jd.gomes.aeroinfo.util.ResourceState
@@ -134,7 +137,7 @@ private fun InfoContent(airportInfo: AirportDto) {
                             contentDescription = null,
                         )
                         Text(
-                            text = "xxxx hpa", // TODO: pegar de algum lugar ?
+                            text = airportInfo.metar.getPressure().toString(),
                             modifier = Modifier.padding(start = 5.dp, top = 2.dp),
                         )
 
@@ -315,6 +318,20 @@ private fun InfoContent(airportInfo: AirportDto) {
                                 text = it.sunset,
                             )
                         }
+                    }
+
+                    Spacer(modifier = Modifier.height(20.dp))
+
+                    Text(
+                        text = "DIREÇÃO DO VENTO",
+                        color = MaterialTheme.colors.GrayPrimary,
+                        fontWeight = FontWeight.Bold
+                    )
+
+                    Row {
+                        DirectionWindRunway(
+                            airportInfo.metar.getWindDirection().toString().toFloat()
+                        )
                     }
                 }
             }
