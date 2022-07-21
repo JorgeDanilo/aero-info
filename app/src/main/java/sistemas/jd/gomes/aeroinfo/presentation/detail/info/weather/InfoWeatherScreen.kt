@@ -321,19 +321,21 @@ private fun InfoContent(airportInfo: AirportDto) {
                         }
                     }
 
-                    Spacer(modifier = Modifier.height(20.dp))
+                    if (airportInfo.metar.getWindDirection() != "VRB") {
+                        Spacer(modifier = Modifier.height(20.dp))
 
-                    Text(
-                        text = "DIREÇÃO DO VENTO",
-                        color = MaterialTheme.colors.GrayPrimary,
-                        fontWeight = FontWeight.Bold
-                    )
-
-                    Row {
-                        DirectionWindRunway(
-                            airportInfo.runwayDirection.getRunwayDirection().toFloat(),
-                            airportInfo.metar.getWindDirection().toFloat()
+                        Text(
+                            text = "DIREÇÃO DO VENTO",
+                            color = MaterialTheme.colors.GrayPrimary,
+                            fontWeight = FontWeight.Bold
                         )
+
+                        Row {
+                            DirectionWindRunway(
+                                airportInfo.runwayDirection.getRunwayDirection().toFloat(),
+                                airportInfo.metar.getWindDirection().toFloat()
+                            )
+                        }
                     }
                 }
             }

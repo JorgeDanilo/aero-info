@@ -7,5 +7,9 @@ import org.simpleframework.xml.Root
 class RotaerResponse @JvmOverloads constructor(
     @field:Element(
         name = "runways",
-    ) var runways: Runway? = null
+    ) var runways: Runway? = null,
+
+//    @field:Element(
+//        name = "services",
+//    ) var services: Services? = null
 )

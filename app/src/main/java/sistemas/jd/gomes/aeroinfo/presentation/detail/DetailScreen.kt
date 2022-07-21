@@ -1,5 +1,7 @@
 package sistemas.jd.gomes.aeroinfo.presentation.detail
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -14,6 +16,7 @@ import sistemas.jd.gomes.aeroinfo.presentation.detail.info.BottomNavItem
 import sistemas.jd.gomes.aeroinfo.ui.theme.BlueDark
 import sistemas.jd.gomes.aeroinfo.ui.theme.YellowDark
 
+@RequiresApi(Build.VERSION_CODES.Q)
 @Composable
 fun DetailScreen() {
     val navController = rememberNavController()
