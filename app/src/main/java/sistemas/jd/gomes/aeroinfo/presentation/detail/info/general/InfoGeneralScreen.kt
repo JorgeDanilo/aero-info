@@ -87,7 +87,7 @@ fun InfoGeneralContent(data: Notam?) {
                     )
                 }
 
-                Spacer(Modifier.height(30.dp))
+                Spacer(Modifier.height(25.dp))
 
                 Column(
                     modifier = Modifier
@@ -110,6 +110,8 @@ fun InfoGeneralContent(data: Notam?) {
                                     color = Color.White
                                 )
                             }
+
+                            Spacer(modifier = Modifier.padding(end = 5.dp))
 
                             Box(
                                 modifier = Modifier
