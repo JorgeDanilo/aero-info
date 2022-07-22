@@ -21,7 +21,7 @@ sealed class BottomNavItem(
 
     object INFO_GENERAL :
         BottomNavItem(
-            "Inf. Gerais",
+            "Notams",
             Icons.Default.Info,
             "info_general"
         )

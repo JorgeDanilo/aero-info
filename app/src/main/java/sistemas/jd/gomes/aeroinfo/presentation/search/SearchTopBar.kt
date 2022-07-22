@@ -53,6 +53,8 @@ fun SearchWidget(
         onValueChange = { value -> onTextChange(value) },
         placeholder = {
             Text(
+                style = MaterialTheme.typography.body1,
+                fontSize = 12.sp,
                 modifier = Modifier
                     .alpha(alpha = ContentAlpha.medium),
                 text = stringResource(R.string.title_search_bar),

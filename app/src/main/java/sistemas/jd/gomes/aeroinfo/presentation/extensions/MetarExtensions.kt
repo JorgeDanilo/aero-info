@@ -3,9 +3,10 @@ package sistemas.jd.gomes.aeroinfo.presentation.extensions
 private const val PRESSURE = "Q"
 private const val WIND = "KT"
 
-fun String.getPressure(): CharSequence {
+fun String.getPressure(): String {
     this.let {
         return this.subSequence(matchDetails(this.replace("\n", ""), PRESSURE), this.length - 1)
+            .toString()
     }
 }
 

@@ -21,17 +21,17 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import coil.compose.AsyncImage
 import sistemas.jd.gomes.aeroinfo.R
+import sistemas.jd.gomes.aeroinfo.presentation.component.LoadingProgressBar
 import sistemas.jd.gomes.aeroinfo.util.SearchDTO
 
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
 fun InfoRotaerScreen() {
+    LoadingProgressBar()
     val url = "https://aisweb.decea.mil.br/?i=aerodromos&codigo=${SearchDTO.icaoCode}#rotaer"
-
     AndroidView(factory = {
         WebView(it).apply {
             this.settings.javaScriptEnabled = true
-
             webViewClient = object  : WebViewClient() {
                 override fun onPageFinished(view: WebView?, url: String?) {
                     loadUrl("javascript:document.getElementById('barra_decea').remove();\n" +

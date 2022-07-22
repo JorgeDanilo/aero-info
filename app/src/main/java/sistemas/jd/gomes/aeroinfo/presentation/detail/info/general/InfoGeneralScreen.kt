@@ -80,7 +80,7 @@ fun InfoGeneralContent(data: Notam?) {
                 Spacer(modifier = Modifier.height(28.dp))
                 Row {
                     Text(
-                        text = "INFORMAÇÕES GERAIS",
+                        text = "Notam",
                         color = Color.White,
                         fontWeight = FontWeight.Bold,
                         fontSize = 22.sp
@@ -95,49 +95,6 @@ fun InfoGeneralContent(data: Notam?) {
                         .padding(start = 8.dp, top = 8.dp, end = 8.dp, bottom = 50.dp),
                     horizontalAlignment = Alignment.Start
                 ) {
-                    Text(text = "FREQUÊNCIAS", color = MaterialTheme.colors.GrayPrimary)
-
-                    Spacer(modifier = Modifier.height(5.dp))
-
-                    Row {
-                        Text(text = "TORRE SÃO PAULO - ", fontWeight = FontWeight.Bold)
-                        Text(text = "118.050 / 127.150")
-                    }
-
-                    Spacer(modifier = Modifier.height(5.dp))
-
-                    Row {
-                        Text(text = "SOLO SÃO PAULO - ", fontWeight = FontWeight.Bold)
-                        Text(text = "121.900")
-                    }
-
-                    Spacer(modifier = Modifier.height(5.dp))
-
-                    Row {
-                        Text(text = "TRÁFEGO SÃO PAULO - ", fontWeight = FontWeight.Bold)
-                        Text(text = "120.600")
-                    }
-
-                    Spacer(modifier = Modifier.height(5.dp))
-
-                    Row {
-                        Text(text = "ATIS SÃO PAULO - ", fontWeight = FontWeight.Bold)
-                        Text(text = "127.650")
-                    }
-
-                    Spacer(modifier = Modifier.height(20.dp))
-
-                    Text(text = "ABASTECIMENTO", color = MaterialTheme.colors.GrayPrimary)
-
-                    Row {
-                        Text(text = "PF TF", fontWeight = FontWeight.Bold)
-                        Text(text = " - (DLY 0800-0200)", modifier = Modifier.padding(start = 5.dp))
-                    }
-
-                    /* NOTAMS */
-
-                    Spacer(modifier = Modifier.height(20.dp))
-
                     Text(text = "NOTAMs", color = MaterialTheme.colors.GrayPrimary)
 
                     data?.notamItem?.forEach { notamItem ->

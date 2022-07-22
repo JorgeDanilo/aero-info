@@ -4,8 +4,6 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
@@ -16,19 +14,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import sistemas.jd.gomes.aeroinfo.R
+import sistemas.jd.gomes.aeroinfo.presentation.Screen
 import sistemas.jd.gomes.aeroinfo.presentation.component.ErrorScreen
 import sistemas.jd.gomes.aeroinfo.presentation.component.LoadingProgressBar
-import sistemas.jd.gomes.aeroinfo.presentation.Screen
 import sistemas.jd.gomes.aeroinfo.ui.theme.BlueDark
-import sistemas.jd.gomes.aeroinfo.ui.theme.GrayPrimary
-import sistemas.jd.gomes.aeroinfo.util.DateUtil.timeNow
 import sistemas.jd.gomes.aeroinfo.util.ResourceState
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -115,7 +111,7 @@ fun ListAirportContent(viewModel: SearchViewModel, navController: NavHostControl
                 }
             }
             is ResourceState.Loading -> {
-                LoadingProgressBar()
+                LoadingProgressBar(color = Color.White)
             }
 
             is ResourceState.Error -> {
@@ -137,7 +133,7 @@ fun ListAirportItem(
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 6.dp, start = 6.dp, end = 6.dp)
-            .height(320.dp)
+            .height(250.dp)
     ) {
         Column(modifier = Modifier
             .padding(all = 6.dp)
@@ -204,81 +200,6 @@ fun ListAirportItem(
                 )
 
                 Spacer(modifier = Modifier.padding(start = 30.dp))
-
-//                if (airport[4] == "g") {
-//                    Box(
-//                        modifier = Modifier
-//                            .background(color = Color.Green)
-//                            .padding(all = 5.dp)
-//                    ) {
-//                        Text(
-//                            text = "VRF",
-//                            fontWeight = FontWeight.Bold,
-//                            color = MaterialTheme.colors.BlueDark
-//                        )
-//                    }
-//                } else if (airport[4] == "r") {
-//                    Box(
-//                        modifier = Modifier
-//                            .background(color = Color.Red)
-//                            .padding(all = 5.dp)
-//                    ) {
-//                        Text(
-//                            text = "IFR",
-//                            fontWeight = FontWeight.Bold,
-//                            color = MaterialTheme.colors.BlueDark
-//                        )
-//                    }
-//                }
-
-            }
-            Row {
-                Icon(
-                    Icons.Filled.DateRange,
-                    tint = MaterialTheme.colors.GrayPrimary,
-                    contentDescription = null,
-                )
-                Text(
-                    text = timeNow(),
-                    modifier = Modifier.padding(start = 5.dp, top = 2.dp),
-                )
-
-//                Spacer(modifier = Modifier.padding(start = 6.dp))
-//
-//                Icon(
-//                    Icons.Default.AirplaneTicket,
-//                    tint = MaterialTheme.colors.GrayPrimary,
-//                    contentDescription = null,
-//                )
-//
-//                Text(
-//                    text = "230/3KT",
-//                    modifier = Modifier.padding(start = 5.dp, top = 2.dp),
-//                )
-//
-//                Spacer(modifier = Modifier.padding(start = 6.dp))
-//
-//                Icon(
-//                    Icons.Default.Thermostat,
-//                    tint = MaterialTheme.colors.GrayPrimary,
-//                    contentDescription = null,
-//                )
-//                Text(
-//                    text = "16ºC",
-//                    modifier = Modifier.padding(start = 5.dp, top = 2.dp),
-//                )
-//
-//                Spacer(modifier = Modifier.padding(start = 6.dp))
-//
-//                Icon(
-//                    Icons.Default.Speed,
-//                    tint = MaterialTheme.colors.GrayPrimary,
-//                    contentDescription = null,
-//                )
-//                Text(
-//                    text = "1013",
-//                    modifier = Modifier.padding(start = 5.dp, top = 2.dp),
-//                )
             }
 
             Row(Modifier.padding(top = 5.dp)) {
@@ -340,25 +261,11 @@ fun ListAirportItem(
                 }
             }
 
-//            Row(modifier = Modifier.padding(top = 5.dp)) {
-//                Text(
-//                    text = "Condições:",
-//                    modifier = Modifier.padding(start = 2.dp, top = 2.dp),
-//                    fontWeight = FontWeight.Bold
-//                )
-//
-//                Text(
-//                    text = "Sem tempo significativo",
-//                    modifier = Modifier.padding(start = 5.dp, top = 2.dp),
-//                )
-//            }
-
             Text(
                 text = infoAirport[5],
+                fontSize = 14.sp,
                 modifier = Modifier
                     .padding(start = 2.dp, top = 2.dp)
-                    .padding(top = 5.dp),
-                fontStyle = FontStyle.Italic
             )
         }
     }

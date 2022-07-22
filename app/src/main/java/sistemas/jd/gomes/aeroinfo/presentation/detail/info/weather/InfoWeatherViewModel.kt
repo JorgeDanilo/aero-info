@@ -43,13 +43,12 @@ class InfoWeatherViewModel @Inject constructor(
                     SearchDTO.icaoCode, timeNowToJson(), formatDateToJson(sumDays(now(), 3))
                 )
                 val rotaerResponse = rotarRepository.getRotaer(SearchDTO.icaoCode)
-                _infoAirport.value =
-                    handleAirportResponse(
-                        airportResponse,
-                        meteorologyResponse,
-                        sunsetResponse,
-                        rotaerResponse
-                    )
+                _infoAirport.value = handleAirportResponse(
+                    airportResponse,
+                    meteorologyResponse,
+                    sunsetResponse,
+                    rotaerResponse
+                )
             } catch (t: Throwable) {
                 when (t) {
                     is IOException -> _infoAirport.value =
@@ -72,24 +71,24 @@ class InfoWeatherViewModel @Inject constructor(
             sunsetResponse.isSuccessful && rotaerResponse.isSuccessful
         ) {
             val response = AirportDto(
-                airportInfoResponse.body()?.data?.localidade!!,
-                airportInfoResponse.body()?.data?.nome!!,
-                airportInfoResponse.body()?.data?.cidade!!,
-                airportInfoResponse.body()?.data?.longitude!!,
-                airportInfoResponse.body()?.data?.latitude!!,
-                airportInfoResponse.body()?.data?.localizacao!!,
-                airportInfoResponse.body()?.data?.metar!!,
-                meteorologyResponse.body()?.meteoroly?.taf!!,
-                airportInfoResponse.body()?.data?.data!!,
-                airportInfoResponse.body()?.data?.temperatura!!,
-                airportInfoResponse.body()?.data?.umidadeRelativa!!,
-                airportInfoResponse.body()?.data?.visibilidade!!,
-                airportInfoResponse.body()?.data?.teto!!,
-                airportInfoResponse.body()?.data?.ceu!!,
-                airportInfoResponse.body()?.data?.condicoesTempo!!,
-                airportInfoResponse.body()?.data?.vento!!,
-                sunsetResponse.body()?.sunriseDays!!,
-                rotaerResponse.body()?.runways?.runwayItem?.get(0)?.identification!!
+                airportInfoResponse.body()?.data?.localidade,
+                airportInfoResponse.body()?.data?.nome,
+                airportInfoResponse.body()?.data?.cidade,
+                airportInfoResponse.body()?.data?.longitude,
+                airportInfoResponse.body()?.data?.latitude,
+                airportInfoResponse.body()?.data?.localizacao,
+                airportInfoResponse.body()?.data?.metar,
+                meteorologyResponse.body()?.meteoroly?.taf,
+                airportInfoResponse.body()?.data?.data,
+                airportInfoResponse.body()?.data?.temperatura,
+                airportInfoResponse.body()?.data?.umidadeRelativa,
+                airportInfoResponse.body()?.data?.visibilidade,
+                airportInfoResponse.body()?.data?.teto,
+                airportInfoResponse.body()?.data?.ceu,
+                airportInfoResponse.body()?.data?.condicoesTempo,
+                airportInfoResponse.body()?.data?.vento,
+                sunsetResponse.body()?.sunriseDays,
+                rotaerResponse.body()?.runways?.runwayItem?.get(0)?.identification
             )
             return ResourceState.Success(response)
         }

@@ -81,14 +81,14 @@ private fun InfoContent(airportInfo: AirportDto) {
                 Spacer(modifier = Modifier.height(28.dp))
                 Row {
                     Text(
-                        text = airportInfo.nome,
+                        text = airportInfo.nome ?: "",
                         color = Color.White,
                         fontWeight = FontWeight.Bold,
                         fontSize = 18.sp
                     )
                 }
                 Text(
-                    text = airportInfo.localizacao,
+                    text = airportInfo.localizacao ?: "",
                     color = Color.Gray,
                 )
 
@@ -100,245 +100,266 @@ private fun InfoContent(airportInfo: AirportDto) {
                         .padding(all = 8.dp),
                     horizontalAlignment = Alignment.Start
                 ) {
-                    Text(
-                        text = "INFORMAÇÕES",
-                        color = MaterialTheme.colors.GrayPrimary,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(bottom = 2.dp)
-                    )
-
-                    Row {
-                        Icon(
-                            Icons.Filled.DateRange,
-                            tint = MaterialTheme.colors.GrayPrimary,
-                            contentDescription = null,
-                        )
-                        Text(
-                            text = airportInfo.data,
-                            modifier = Modifier.padding(start = 5.dp, top = 2.dp),
-                        )
-                    }
-
-                    Row {
-                        Icon(
-                            Icons.Default.AirplaneTicket,
-                            tint = MaterialTheme.colors.GrayPrimary,
-                            contentDescription = null,
-                        )
-                        Text(
-                            text = airportInfo.vento,
-                            modifier = Modifier.padding(start = 5.dp, top = 2.dp),
-                        )
-                    }
-
-                    Row {
-                        Icon(
-                            Icons.Default.Speed,
-                            tint = MaterialTheme.colors.GrayPrimary,
-                            contentDescription = null,
-                        )
-                        Text(
-                            text = airportInfo.metar.getPressure().toString(),
-                            modifier = Modifier.padding(start = 5.dp, top = 2.dp),
-                        )
-
-                        Icon(
-                            Icons.Default.Thermostat,
-                            tint = MaterialTheme.colors.GrayPrimary,
-                            contentDescription = null,
-                        )
-                        Text(
-                            text = airportInfo.temperatura,
-                            modifier = Modifier.padding(start = 5.dp, top = 2.dp),
-                        )
-                    }
-
-                    Row {
-                        Text(
-                            text = "Visibilidade:",
-                            modifier = Modifier.padding(start = 2.dp, top = 2.dp),
-                            fontWeight = FontWeight.Bold
-                        )
-
-                        Text(
-                            text = airportInfo.visibilidade,
-                            modifier = Modifier.padding(start = 5.dp, top = 2.dp),
-                        )
-                    }
-
-                    Row {
-
-                        Text(
-                            text = "Teto:",
-                            modifier = Modifier.padding(start = 2.dp, top = 2.dp),
-                            fontWeight = FontWeight.Bold
-                        )
-
-                        Text(
-                            text = airportInfo.teto,
-                            modifier = Modifier.padding(start = 5.dp, top = 2.dp),
-                        )
-                    }
-
-                    Row {
-
-                        Text(
-                            text = "Umidade Relativa:",
-                            modifier = Modifier.padding(start = 2.dp, top = 2.dp),
-                            fontWeight = FontWeight.Bold
-                        )
-
-                        Text(
-                            text = airportInfo.umidadeRelativa,
-                            modifier = Modifier.padding(top = 2.dp, start = 5.dp),
-                        )
-
-                        Spacer(modifier = Modifier.padding(start = 6.dp))
-
-                        Text(
-                            text = "Ceú:",
-                            modifier = Modifier.padding(start = 2.dp, top = 2.dp),
-                            fontWeight = FontWeight.Bold
-                        )
-
-                        Text(
-                            text = airportInfo.ceu,
-                            modifier = Modifier.padding(top = 2.dp, start = 5.dp),
-                        )
-                    }
-
-                    Row {
-                        Text(
-                            text = "Condições:",
-                            modifier = Modifier.padding(start = 2.dp, top = 2.dp),
-                            fontWeight = FontWeight.Bold
-                        )
-
-                        Text(
-                            text = airportInfo.condicoesTempo,
-                            modifier = Modifier.padding(top = 2.dp, start = 5.dp),
-                        )
-                    }
-
-                    Row {
-                        Text(
-                            text = "Sol:",
-                            modifier = Modifier.padding(start = 2.dp, top = 2.dp),
-                            fontWeight = FontWeight.Bold
-                        )
-
-                        Text(
-                            text = airportInfo.sunsetDays[0].sunrise,
-                            modifier = Modifier.padding(top = 2.dp, start = 5.dp),
-                        )
-
-                        Icon(
-                            Icons.Rounded.WbSunny,
-                            contentDescription = null
-                        )
-                        Text(
-                            text = airportInfo.sunsetDays[0].sunset,
-                            modifier = Modifier.padding(top = 2.dp, start = 5.dp)
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.height(20.dp))
-
-                    Row {
-                        Text(
-                            text = "METAR",
-                            color = MaterialTheme.colors.GrayPrimary,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-
-                    Row {
-                        Text(
-                            text = "- ${airportInfo.metar}",
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.height(20.dp))
-
-                    Row {
-                        Text(
-                            text = "TAF",
-                            color = MaterialTheme.colors.GrayPrimary,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-
-                    Row {
-                        Text(
-                            text = "- ${airportInfo.taf}",
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.height(20.dp))
-
-                    Row {
-                        Text(
-                            text = "NASCER E PÔR DO SOL",
-                            color = MaterialTheme.colors.GrayPrimary,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    Row {
-                        Text(
-                            text = "Data",
-                            color = MaterialTheme.colors.GrayPrimary,
-                        )
-
-                        Text(
-                            text = "UTC",
-                            color = MaterialTheme.colors.GrayPrimary,
-                            modifier = Modifier.padding(start = 100.dp)
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.height(6.dp))
-
-                    airportInfo.sunsetDays.forEach {
-                        Row {
-                            Text(text = it.dateSunrise)
-
-                            Text(
-                                text = it.sunrise,
-                                modifier = Modifier.padding(start = 20.dp)
-                            )
-
-                            Icon(
-                                Icons.Rounded.WbSunny,
-                                contentDescription = null
-                            )
-
-                            Text(
-                                text = it.sunset,
-                            )
-                        }
-                    }
-
-                    if (airportInfo.metar.getWindDirection() != "VRB") {
-                        Spacer(modifier = Modifier.height(20.dp))
-
-                        Text(
-                            text = "DIREÇÃO DO VENTO",
-                            color = MaterialTheme.colors.GrayPrimary,
-                            fontWeight = FontWeight.Bold
-                        )
-
-                        Row {
-                            DirectionWindRunway(
-                                airportInfo.runwayDirection.getRunwayDirection().toFloat(),
-                                airportInfo.metar.getWindDirection().toFloat()
-                            )
-                        }
-                    }
+                    InformationGeneralScreen(airportInfo)
+                    SunsetDayScreen(airportInfo)
+                    MetarScreen(airportInfo)
+                    SunsetNextDaysScreen(airportInfo)
+                    DiagranWind(airportInfo)
                 }
             }
         }
     )
+}
+
+@Composable
+private fun InformationGeneralScreen(airportInfo: AirportDto) {
+    Text(
+        text = "INFORMAÇÕES",
+        color = MaterialTheme.colors.GrayPrimary,
+        fontWeight = FontWeight.Bold,
+        modifier = Modifier.padding(bottom = 2.dp)
+    )
+
+    Row {
+        Icon(
+            Icons.Filled.DateRange,
+            tint = MaterialTheme.colors.GrayPrimary,
+            contentDescription = null,
+        )
+        Text(
+            text = airportInfo.data ?: "",
+            modifier = Modifier.padding(start = 5.dp, top = 2.dp),
+        )
+    }
+
+    Row {
+        Icon(
+            Icons.Default.AirplaneTicket,
+            tint = MaterialTheme.colors.GrayPrimary,
+            contentDescription = null,
+        )
+        Text(
+            text = airportInfo.vento ?: "",
+            modifier = Modifier.padding(start = 5.dp, top = 2.dp),
+        )
+    }
+
+    Row {
+        Icon(
+            Icons.Default.Speed,
+            tint = MaterialTheme.colors.GrayPrimary,
+            contentDescription = null,
+        )
+        Text(
+            text = airportInfo.metar?.getPressure() ?: "",
+            modifier = Modifier.padding(start = 5.dp, top = 2.dp),
+        )
+
+        Icon(
+            Icons.Default.Thermostat,
+            tint = MaterialTheme.colors.GrayPrimary,
+            contentDescription = null,
+        )
+        Text(
+            text = airportInfo.temperatura ?: "",
+            modifier = Modifier.padding(start = 5.dp, top = 2.dp),
+        )
+    }
+
+    Row {
+        Text(
+            text = "Visibilidade:",
+            modifier = Modifier.padding(start = 2.dp, top = 2.dp),
+            fontWeight = FontWeight.Bold
+        )
+
+        Text(
+            text = airportInfo.visibilidade ?: "",
+            modifier = Modifier.padding(start = 5.dp, top = 2.dp),
+        )
+    }
+
+    Row {
+
+        Text(
+            text = "Teto:",
+            modifier = Modifier.padding(start = 2.dp, top = 2.dp),
+            fontWeight = FontWeight.Bold
+        )
+
+        Text(
+            text = airportInfo.teto ?: "",
+            modifier = Modifier.padding(start = 5.dp, top = 2.dp),
+        )
+    }
+
+    Row {
+
+        Text(
+            text = "Umidade Relativa:",
+            modifier = Modifier.padding(start = 2.dp, top = 2.dp),
+            fontWeight = FontWeight.Bold
+        )
+
+        Text(
+            text = airportInfo.umidadeRelativa ?: "",
+            modifier = Modifier.padding(top = 2.dp, start = 5.dp),
+        )
+
+        Spacer(modifier = Modifier.padding(start = 6.dp))
+
+        Text(
+            text = "Ceú:",
+            modifier = Modifier.padding(start = 2.dp, top = 2.dp),
+            fontWeight = FontWeight.Bold
+        )
+
+        Text(
+            text = airportInfo.ceu ?: "",
+            modifier = Modifier.padding(top = 2.dp, start = 5.dp),
+        )
+    }
+
+    Row {
+        Text(
+            text = "Condições:",
+            modifier = Modifier.padding(start = 2.dp, top = 2.dp),
+            fontWeight = FontWeight.Bold
+        )
+
+        Text(
+            text = airportInfo.condicoesTempo ?: "",
+            modifier = Modifier.padding(top = 2.dp, start = 5.dp),
+        )
+    }
+}
+
+@Composable
+private fun SunsetDayScreen(airportInfo: AirportDto) {
+    Row {
+        Text(
+            text = "Sol:",
+            modifier = Modifier.padding(start = 2.dp, top = 2.dp),
+            fontWeight = FontWeight.Bold
+        )
+
+        Text(
+            text = airportInfo.sunsetDays?.get(0)?.sunrise ?: "",
+            modifier = Modifier.padding(top = 2.dp, start = 5.dp),
+        )
+
+        Icon(
+            Icons.Rounded.WbSunny,
+            contentDescription = null
+        )
+        Text(
+            text = airportInfo.sunsetDays?.get(0)?.sunset ?: "",
+            modifier = Modifier.padding(top = 2.dp, start = 5.dp)
+        )
+    }
+}
+
+@Composable
+private fun MetarScreen(airportInfo: AirportDto) {
+    Spacer(modifier = Modifier.height(20.dp))
+
+    Row {
+        Text(
+            text = "METAR",
+            color = MaterialTheme.colors.GrayPrimary,
+            fontWeight = FontWeight.Bold
+        )
+    }
+
+    Row {
+        Text(
+            text = "- ${airportInfo.metar}",
+        )
+    }
+
+    Spacer(modifier = Modifier.height(20.dp))
+
+    Row {
+        Text(
+            text = "TAF",
+            color = MaterialTheme.colors.GrayPrimary,
+            fontWeight = FontWeight.Bold
+        )
+    }
+
+    Row {
+        Text(
+            text = "- ${airportInfo.taf}",
+        )
+    }
+}
+
+@Composable
+private fun DiagranWind(airportInfo: AirportDto) {
+    if (airportInfo.metar?.getWindDirection() != "VRB") {
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Text(
+            text = "DIAGRAMA DE VENTO",
+            color = MaterialTheme.colors.GrayPrimary,
+            fontWeight = FontWeight.Bold
+        )
+
+        Row {
+            DirectionWindRunway(
+                airportInfo.runwayDirection?.getRunwayDirection()?.toFloat() ?: 0f,
+                airportInfo.metar?.getWindDirection()?.toFloat() ?: 0f
+            )
+        }
+    }
+}
+
+@Composable
+private fun SunsetNextDaysScreen(airportInfo: AirportDto) {
+    Spacer(modifier = Modifier.height(20.dp))
+
+    Row {
+        Text(
+            text = "NASCER E PÔR DO SOL",
+            color = MaterialTheme.colors.GrayPrimary,
+            fontWeight = FontWeight.Bold
+        )
+    }
+
+    Spacer(modifier = Modifier.height(8.dp))
+
+    Row {
+        Text(
+            text = "Data",
+            color = MaterialTheme.colors.GrayPrimary,
+        )
+
+        Text(
+            text = "UTC",
+            color = MaterialTheme.colors.GrayPrimary,
+            modifier = Modifier.padding(start = 100.dp)
+        )
+    }
+
+    Spacer(modifier = Modifier.height(6.dp))
+
+    airportInfo.sunsetDays?.forEach {
+        Row {
+            Text(text = it.dateSunrise ?: "")
+
+            Text(
+                text = it.sunrise ?: "",
+                modifier = Modifier.padding(start = 20.dp)
+            )
+
+            Icon(
+                Icons.Rounded.WbSunny,
+                contentDescription = null
+            )
+
+            Text(
+                text = it.sunset ?: "",
+            )
+        }
+    }
 }
