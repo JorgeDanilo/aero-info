@@ -26,6 +26,7 @@
 		</activity>
 
 		<activity android:name=".presentation.DetailPdfActivity" />
+		<activity android:name=".presentation.SigwxActivity" />
 	</application>
 
 	<uses-permission android:name="android.permission.INTERNET" />

@@ -4,19 +4,28 @@ private const val PRESSURE = "Q"
 private const val WIND = "KT"
 
 fun String.getPressure(): String {
-    this.let {
-        return this.subSequence(matchDetails(this.replace("\n", ""), PRESSURE), this.length - 1)
-            .toString()
+    return if (this.contentEquals(PRESSURE)) {
+        this.let {
+            return this.subSequence(matchDetails(this.replace("\n", ""), PRESSURE), this.length - 1)
+                .toString()
+        }
+    } else {
+        ""
     }
 }
 
 fun String.getWindDirection(): String {
-    this.let {
-        return this.subSequence(
-            matchDetails(this.replace("\n", ""), WIND) - 5,
-            matchDetails(this, WIND) - 2
-        ).toString()
+    return if (this.contentEquals(WIND)) {
+        this.let {
+            return this.subSequence(
+                matchDetails(this.replace("\n", ""), WIND) - 5,
+                matchDetails(this, WIND) - 2
+            ).toString()
+        }
+    } else {
+        ""
     }
+
 }
 
 fun String.getWindSpeed(): String {

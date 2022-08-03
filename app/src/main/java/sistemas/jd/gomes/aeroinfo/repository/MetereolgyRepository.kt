@@ -8,4 +8,5 @@ class MetereolgyRepository @Inject constructor(
 ) {
 
     suspend fun getMeteorology(icaoCode: String) = meteorologyApi.getMeteorology(icaoCode)
+    suspend fun getChartSigwx() = meteorologyApi.getChartSigwx()
 }

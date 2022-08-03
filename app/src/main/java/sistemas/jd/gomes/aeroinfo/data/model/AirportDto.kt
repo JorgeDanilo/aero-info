@@ -18,5 +18,6 @@ data class AirportDto(
     var condicoesTempo: String?,
     var vento: String?,
     var sunsetDays: MutableList<SunriseDay>? = mutableListOf(),
-    var runwayDirection: String?
+    var runwayDirection: String?,
+    val chartSigwx: String?
 )

@@ -1,11 +1,13 @@
 package sistemas.jd.gomes.aeroinfo.presentation.detail.info.weather
 
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AirplaneTicket
 import androidx.compose.material.icons.filled.DateRange
@@ -19,11 +21,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import sistemas.jd.gomes.aeroinfo.data.model.AirportDto
+import sistemas.jd.gomes.aeroinfo.presentation.SigwxActivity
 import sistemas.jd.gomes.aeroinfo.presentation.component.DirectionWindRunway
 import sistemas.jd.gomes.aeroinfo.presentation.component.ErrorScreen
 import sistemas.jd.gomes.aeroinfo.presentation.component.LoadingProgressBar
@@ -33,15 +37,25 @@ import sistemas.jd.gomes.aeroinfo.presentation.extensions.getWindDirection
 import sistemas.jd.gomes.aeroinfo.ui.theme.BlueDark
 import sistemas.jd.gomes.aeroinfo.ui.theme.GrayPrimary
 import sistemas.jd.gomes.aeroinfo.util.ResourceState
+import sistemas.jd.gomes.aeroinfo.util.SearchDTO
 
 @Composable
 fun InfoWeatherScreen(
     infoWeatherViewModel: InfoWeatherViewModel = hiltViewModel()
 ) {
+    val context = LocalContext.current
     val result by infoWeatherViewModel.infoAirport.collectAsState()
+    val sigwxUrl by infoWeatherViewModel.sigwxUrl.collectAsState()
+
+    if (sigwxUrl.isNotEmpty()) {
+        val intent = Intent(context, SigwxActivity::class.java)
+        SearchDTO.urlChartSigwx = sigwxUrl
+        context.startActivity(intent)
+    }
+
     when (result) {
         is ResourceState.Success -> {
-            result.data?.let { InfoContent(it) }
+            result.data?.let { InfoContent(it, infoWeatherViewModel) }
         }
         is ResourceState.Loading -> {
             LoadingProgressBar()
@@ -55,9 +69,9 @@ fun InfoWeatherScreen(
 }
 
 @Composable
-private fun InfoContent(airportInfo: AirportDto) {
+private fun InfoContent(airportInfo: AirportDto, infoWeatherViewModel: InfoWeatherViewModel) {
     Scaffold(
-        backgroundColor = MaterialTheme.colors.BlueDark,
+        backgroundColor = colors.BlueDark,
         contentColor = Color.White,
         topBar = {
 
@@ -66,7 +80,7 @@ private fun InfoContent(airportInfo: AirportDto) {
             Divider(
                 modifier = Modifier
                     .height(350.dp)
-                    .background(MaterialTheme.colors.BlueDark)
+                    .background(colors.BlueDark)
                     .clip(RoundedCornerShape(20.dp))
             )
             Column(
@@ -104,7 +118,8 @@ private fun InfoContent(airportInfo: AirportDto) {
                     SunsetDayScreen(airportInfo)
                     MetarScreen(airportInfo)
                     SunsetNextDaysScreen(airportInfo)
-                    DiagranWind(airportInfo)
+                    ButtonSigwx(airportInfo, infoWeatherViewModel)
+                    DiagramWind(airportInfo)
                 }
             }
         }
@@ -112,10 +127,24 @@ private fun InfoContent(airportInfo: AirportDto) {
 }
 
 @Composable
+fun ButtonSigwx(airportInfo: AirportDto, viewModel: InfoWeatherViewModel) {
+    Button(
+        onClick = {
+            viewModel.openSigwx(airportInfo.chartSigwx)
+        },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 8.dp, bottom = 8.dp)
+    ) {
+        Text(text = "Carta Sigwx")
+    }
+}
+
+@Composable
 private fun InformationGeneralScreen(airportInfo: AirportDto) {
     Text(
         text = "INFORMAÇÕES",
-        color = MaterialTheme.colors.GrayPrimary,
+        color = colors.GrayPrimary,
         fontWeight = FontWeight.Bold,
         modifier = Modifier.padding(bottom = 2.dp)
     )
@@ -123,11 +152,11 @@ private fun InformationGeneralScreen(airportInfo: AirportDto) {
     Row {
         Icon(
             Icons.Filled.DateRange,
-            tint = MaterialTheme.colors.GrayPrimary,
+            tint = colors.GrayPrimary,
             contentDescription = null,
         )
         Text(
-            text = airportInfo.data ?: "",
+            text = airportInfo.data ?: "Não informado.",
             modifier = Modifier.padding(start = 5.dp, top = 2.dp),
         )
     }
@@ -135,11 +164,11 @@ private fun InformationGeneralScreen(airportInfo: AirportDto) {
     Row {
         Icon(
             Icons.Default.AirplaneTicket,
-            tint = MaterialTheme.colors.GrayPrimary,
+            tint = colors.GrayPrimary,
             contentDescription = null,
         )
         Text(
-            text = airportInfo.vento ?: "",
+            text = airportInfo.vento ?: "Não informado.",
             modifier = Modifier.padding(start = 5.dp, top = 2.dp),
         )
     }
@@ -147,21 +176,21 @@ private fun InformationGeneralScreen(airportInfo: AirportDto) {
     Row {
         Icon(
             Icons.Default.Speed,
-            tint = MaterialTheme.colors.GrayPrimary,
+            tint = colors.GrayPrimary,
             contentDescription = null,
         )
         Text(
-            text = airportInfo.metar?.getPressure() ?: "",
+            text = airportInfo.metar?.getPressure() ?: "Não informado.",
             modifier = Modifier.padding(start = 5.dp, top = 2.dp),
         )
 
         Icon(
             Icons.Default.Thermostat,
-            tint = MaterialTheme.colors.GrayPrimary,
+            tint = colors.GrayPrimary,
             contentDescription = null,
         )
         Text(
-            text = airportInfo.temperatura ?: "",
+            text = airportInfo.temperatura ?: "Não informado.",
             modifier = Modifier.padding(start = 5.dp, top = 2.dp),
         )
     }
@@ -174,7 +203,7 @@ private fun InformationGeneralScreen(airportInfo: AirportDto) {
         )
 
         Text(
-            text = airportInfo.visibilidade ?: "",
+            text = airportInfo.visibilidade ?: "Não informado.",
             modifier = Modifier.padding(start = 5.dp, top = 2.dp),
         )
     }
@@ -188,7 +217,7 @@ private fun InformationGeneralScreen(airportInfo: AirportDto) {
         )
 
         Text(
-            text = airportInfo.teto ?: "",
+            text = airportInfo.teto ?: "Não informado.",
             modifier = Modifier.padding(start = 5.dp, top = 2.dp),
         )
     }
@@ -202,7 +231,7 @@ private fun InformationGeneralScreen(airportInfo: AirportDto) {
         )
 
         Text(
-            text = airportInfo.umidadeRelativa ?: "",
+            text = airportInfo.umidadeRelativa ?: "Não informado.",
             modifier = Modifier.padding(top = 2.dp, start = 5.dp),
         )
 
@@ -215,7 +244,7 @@ private fun InformationGeneralScreen(airportInfo: AirportDto) {
         )
 
         Text(
-            text = airportInfo.ceu ?: "",
+            text = airportInfo.ceu ?: "Não informado.",
             modifier = Modifier.padding(top = 2.dp, start = 5.dp),
         )
     }
@@ -228,7 +257,7 @@ private fun InformationGeneralScreen(airportInfo: AirportDto) {
         )
 
         Text(
-            text = airportInfo.condicoesTempo ?: "",
+            text = airportInfo.condicoesTempo ?: "Não informado.",
             modifier = Modifier.padding(top = 2.dp, start = 5.dp),
         )
     }
@@ -266,7 +295,7 @@ private fun MetarScreen(airportInfo: AirportDto) {
     Row {
         Text(
             text = "METAR",
-            color = MaterialTheme.colors.GrayPrimary,
+            color = colors.GrayPrimary,
             fontWeight = FontWeight.Bold
         )
     }
@@ -282,7 +311,7 @@ private fun MetarScreen(airportInfo: AirportDto) {
     Row {
         Text(
             text = "TAF",
-            color = MaterialTheme.colors.GrayPrimary,
+            color = colors.GrayPrimary,
             fontWeight = FontWeight.Bold
         )
     }
@@ -295,13 +324,15 @@ private fun MetarScreen(airportInfo: AirportDto) {
 }
 
 @Composable
-private fun DiagranWind(airportInfo: AirportDto) {
-    if (airportInfo.metar?.getWindDirection() != "VRB") {
+private fun DiagramWind(airportInfo: AirportDto) {
+    if (!airportInfo.metar?.getWindDirection()
+            .isNullOrEmpty() && airportInfo.metar?.getWindDirection() != "VRB"
+    ) {
         Spacer(modifier = Modifier.height(20.dp))
 
         Text(
             text = "DIAGRAMA DE VENTO",
-            color = MaterialTheme.colors.GrayPrimary,
+            color = colors.GrayPrimary,
             fontWeight = FontWeight.Bold
         )
 
@@ -321,7 +352,7 @@ private fun SunsetNextDaysScreen(airportInfo: AirportDto) {
     Row {
         Text(
             text = "NASCER E PÔR DO SOL",
-            color = MaterialTheme.colors.GrayPrimary,
+            color = colors.GrayPrimary,
             fontWeight = FontWeight.Bold
         )
     }
@@ -331,12 +362,12 @@ private fun SunsetNextDaysScreen(airportInfo: AirportDto) {
     Row {
         Text(
             text = "Data",
-            color = MaterialTheme.colors.GrayPrimary,
+            color = colors.GrayPrimary,
         )
 
         Text(
             text = "UTC",
-            color = MaterialTheme.colors.GrayPrimary,
+            color = colors.GrayPrimary,
             modifier = Modifier.padding(start = 100.dp)
         )
     }

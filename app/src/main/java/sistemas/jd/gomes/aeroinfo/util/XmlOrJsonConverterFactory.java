@@ -32,7 +32,7 @@ public class XmlOrJsonConverterFactory extends Converter.Factory {
             }
             if (annotation.annotationType() == Json.class) {
                 return GsonConverterFactory.create(
-                        new GsonBuilder().create()).responseBodyConverter(type, annotations, retrofit);
+                        new GsonBuilder().setLenient().create()).responseBodyConverter(type, annotations, retrofit);
             }
         }
 
