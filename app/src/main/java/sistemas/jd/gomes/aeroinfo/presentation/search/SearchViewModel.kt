@@ -1,11 +1,10 @@
 package sistemas.jd.gomes.aeroinfo.presentation.search
 
-import android.content.Context.MODE_PRIVATE
-import android.content.SharedPreferences
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -28,7 +27,6 @@ class SearchViewModel @Inject constructor(
     private val _airports =
         MutableStateFlow<ResourceState<AirportResponse>>(ResourceState.Empty())
     val airports: StateFlow<ResourceState<AirportResponse>> = _airports
-
 
     fun updateSearchQuery(query: String) {
         _searchQuery.value = query
@@ -60,8 +58,13 @@ class SearchViewModel @Inject constructor(
     }
 
     fun favoriteSearch(searchQuery: String) {
-
+        viewModelScope.launch {
+            repository.saveAirport(searchQuery)
+        }
     }
 
+    fun readAirportsSaved(): Flow<String> {
+        return repository.getAirportSaved()
+    }
 
 }

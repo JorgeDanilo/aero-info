@@ -93,10 +93,6 @@ fun SearchAirportScreen(
     )
 }
 
-fun favoriteSearch(viewModel: SearchViewModel, searchQuery: String) {
-    viewModel.favoriteSearch(searchQuery)
-}
-
 @Composable
 fun ListAirportContent(viewModel: SearchViewModel, navController: NavHostController) {
     val airports = viewModel.airports.collectAsState()
@@ -132,7 +128,7 @@ fun ListAirportContent(viewModel: SearchViewModel, navController: NavHostControl
 fun ListAirportItem(
     infoAirport: List<String>,
     navController: NavHostController,
-    viewModel: SearchViewModel
+    viewModel: SearchViewModel,
 ) {
     Card(
         backgroundColor = MaterialTheme.colors.BlueDark,
@@ -207,15 +203,6 @@ fun ListAirportItem(
 
                 Spacer(
                     modifier = Modifier.padding(start = 25.dp)
-                )
-
-                Icon(
-                    Icons.Outlined.Favorite,
-                    tint = Color.Gray,
-                    contentDescription = "",
-                    modifier = Modifier
-                        .size(24.dp)
-                        .clickable { favoriteSearch(viewModel, infoAirport[1].substring(0, 3)) }
                 )
 
                 Spacer(modifier = Modifier.padding(start = 30.dp))
