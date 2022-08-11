@@ -25,6 +25,7 @@ import sistemas.jd.gomes.aeroinfo.presentation.component.ErrorScreen
 import sistemas.jd.gomes.aeroinfo.presentation.component.LoadingProgressBar
 import sistemas.jd.gomes.aeroinfo.ui.theme.BlueDark
 import sistemas.jd.gomes.aeroinfo.ui.theme.GrayPrimary
+import sistemas.jd.gomes.aeroinfo.ui.theme.YellowDark
 import sistemas.jd.gomes.aeroinfo.util.DateUtil
 import sistemas.jd.gomes.aeroinfo.util.ResourceState
 
@@ -97,11 +98,14 @@ fun InfoGeneralContent(data: Notam?) {
                 ) {
                     Text(text = "NOTAMs", color = MaterialTheme.colors.GrayPrimary)
 
+                    Spacer(modifier = Modifier.height(8.dp))
+
                     data?.notamItem?.forEach { notamItem ->
                         Row {
                             Box(
                                 modifier = Modifier
-                                    .background(color = Color.Blue)
+                                    .clip(RoundedCornerShape(10.dp))
+                                    .background(color = MaterialTheme.colors.YellowDark)
                                     .padding(all = 5.dp)
                             ) {
                                 Text(
@@ -115,7 +119,8 @@ fun InfoGeneralContent(data: Notam?) {
 
                             Box(
                                 modifier = Modifier
-                                    .background(color = Color.Blue)
+                                    .clip(RoundedCornerShape(10.dp))
+                                    .background(color = MaterialTheme.colors.GrayPrimary)
                                     .padding(all = 5.dp)
                             ) {
                                 Text(
@@ -134,12 +139,16 @@ fun InfoGeneralContent(data: Notam?) {
                             )
                         }
 
+                        Spacer(modifier = Modifier.height(8.dp))
+
                         Row {
                             Text(
                                 text = notamItem.informationNotam,
                                 fontWeight = FontWeight.Bold
                             )
                         }
+
+                        Spacer(modifier = Modifier.height(8.dp))
 
                         Row {
                             Icon(

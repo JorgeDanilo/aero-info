@@ -1,10 +1,10 @@
 package sistemas.jd.gomes.aeroinfo.presentation.extensions
 
 private const val PRESSURE = "Q"
-private const val WIND = "KT"
+private const val KT = "KT"
 
 fun String.getPressure(): String {
-    return if (this.contentEquals(PRESSURE)) {
+    return if (this.contains(PRESSURE)) {
         this.let {
             return this.subSequence(matchDetails(this.replace("\n", ""), PRESSURE), this.length - 1)
                 .toString()
@@ -15,25 +15,14 @@ fun String.getPressure(): String {
 }
 
 fun String.getWindDirection(): String {
-    return if (this.contentEquals(WIND)) {
-        this.let {
-            return this.subSequence(
-                matchDetails(this.replace("\n", ""), WIND) - 5,
-                matchDetails(this, WIND) - 2
-            ).toString()
+    return if (this.contains(KT)) {
+        return if (this.subSequence(0, 3).contains("º")) {
+            this.subSequence(0, 2).toString()
+        } else {
+            this.subSequence(0, 3).toString()
         }
     } else {
         ""
-    }
-
-}
-
-fun String.getWindSpeed(): String {
-    this.let {
-        return this.subSequence(
-            matchDetails(this.replace("\n", ""), WIND) - 2,
-            matchDetails(this, WIND)
-        ).toString()
     }
 }
 

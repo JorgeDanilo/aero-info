@@ -1,13 +1,16 @@
 package sistemas.jd.gomes.aeroinfo.di
 
+import android.content.Context
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import sistemas.jd.gomes.aeroinfo.data.remote.*
 import sistemas.jd.gomes.aeroinfo.util.Constants
+import sistemas.jd.gomes.aeroinfo.util.StoreAiport
 import sistemas.jd.gomes.aeroinfo.util.XmlOrJsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
@@ -34,6 +37,14 @@ object Module {
             .addConverterFactory(XmlOrJsonConverterFactory())
             .client(client)
             .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideStoreAirport(
+        @ApplicationContext context: Context
+    ): StoreAiport {
+        return StoreAiport(context = context)
     }
 
     @Singleton

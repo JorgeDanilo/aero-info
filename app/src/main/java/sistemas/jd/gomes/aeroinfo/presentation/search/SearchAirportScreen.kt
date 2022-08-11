@@ -1,9 +1,12 @@
 package sistemas.jd.gomes.aeroinfo.presentation.search
 
+import android.gesture.Gesture
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
@@ -12,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -48,9 +52,7 @@ fun SearchAirportScreen(
     Scaffold(
         backgroundColor = MaterialTheme.colors.BlueDark,
         contentColor = Color.White,
-        topBar = {
-
-        },
+        topBar = {},
         content = {
             Divider(
                 modifier = Modifier
@@ -91,6 +93,10 @@ fun SearchAirportScreen(
     )
 }
 
+fun favoriteSearch(viewModel: SearchViewModel, searchQuery: String) {
+    viewModel.favoriteSearch(searchQuery)
+}
+
 @Composable
 fun ListAirportContent(viewModel: SearchViewModel, navController: NavHostController) {
     val airports = viewModel.airports.collectAsState()
@@ -106,7 +112,7 @@ fun ListAirportContent(viewModel: SearchViewModel, navController: NavHostControl
                 val result = airports.value.data
                 if (!result?.data.isNullOrEmpty()) {
                     result?.data?.forEach {
-                        ListAirportItem(it, navController)
+                        ListAirportItem(it, navController, viewModel)
                     }
                 }
             }
@@ -125,7 +131,8 @@ fun ListAirportContent(viewModel: SearchViewModel, navController: NavHostControl
 @Composable
 fun ListAirportItem(
     infoAirport: List<String>,
-    navController: NavHostController
+    navController: NavHostController,
+    viewModel: SearchViewModel
 ) {
     Card(
         backgroundColor = MaterialTheme.colors.BlueDark,
@@ -171,7 +178,7 @@ fun ListAirportItem(
                     infoAirport[4] == "r" -> {
                         Card(
                             shape = CircleShape,
-                            backgroundColor = Color.Red,
+                            backgroundColor = Red,
                             modifier = Modifier.padding(top = 5.dp, end = 5.dp)
                         ) {
                             Divider(
@@ -190,13 +197,25 @@ fun ListAirportItem(
                 )
 
                 Spacer(
-                    modifier =
-                    Modifier.padding(start = 5.dp)
+                    modifier = Modifier.padding(start = 5.dp)
                 )
 
                 Text(
                     text = infoAirport[1],
                     fontWeight = FontWeight.Bold,
+                )
+
+                Spacer(
+                    modifier = Modifier.padding(start = 25.dp)
+                )
+
+                Icon(
+                    Icons.Outlined.Favorite,
+                    tint = Color.Gray,
+                    contentDescription = "",
+                    modifier = Modifier
+                        .size(24.dp)
+                        .clickable { favoriteSearch(viewModel, infoAirport[1].substring(0, 3)) }
                 )
 
                 Spacer(modifier = Modifier.padding(start = 30.dp))

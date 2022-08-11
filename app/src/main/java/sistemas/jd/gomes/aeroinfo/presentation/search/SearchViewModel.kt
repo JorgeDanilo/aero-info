@@ -1,5 +1,7 @@
 package sistemas.jd.gomes.aeroinfo.presentation.search
 
+import android.content.Context.MODE_PRIVATE
+import android.content.SharedPreferences
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,12 +10,12 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import retrofit2.Response
-import sistemas.jd.gomes.aeroinfo.data.model.AirportInfoResponse
 import sistemas.jd.gomes.aeroinfo.data.model.AirportResponse
 import sistemas.jd.gomes.aeroinfo.repository.AiportRepository
 import sistemas.jd.gomes.aeroinfo.util.ResourceState
 import java.io.IOException
 import javax.inject.Inject
+
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
@@ -56,4 +58,10 @@ class SearchViewModel @Inject constructor(
         }
         return ResourceState.Error(response.message())
     }
+
+    fun favoriteSearch(searchQuery: String) {
+
+    }
+
+
 }

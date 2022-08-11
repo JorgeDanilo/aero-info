@@ -118,6 +118,7 @@ private fun InfoContent(airportInfo: AirportDto, infoWeatherViewModel: InfoWeath
                     SunsetDayScreen(airportInfo)
                     MetarScreen(airportInfo)
                     SunsetNextDaysScreen(airportInfo)
+                    Spacer(modifier = Modifier.height(8.dp))
                     ButtonSigwx(airportInfo, infoWeatherViewModel)
                     DiagramWind(airportInfo)
                 }
@@ -325,9 +326,7 @@ private fun MetarScreen(airportInfo: AirportDto) {
 
 @Composable
 private fun DiagramWind(airportInfo: AirportDto) {
-    if (!airportInfo.metar?.getWindDirection()
-            .isNullOrEmpty() && airportInfo.metar?.getWindDirection() != "VRB"
-    ) {
+    if (airportInfo.vento?.getWindDirection()?.isNotEmpty() == true) {
         Spacer(modifier = Modifier.height(20.dp))
 
         Text(
@@ -339,7 +338,7 @@ private fun DiagramWind(airportInfo: AirportDto) {
         Row {
             DirectionWindRunway(
                 airportInfo.runwayDirection?.getRunwayDirection()?.toFloat() ?: 0f,
-                airportInfo.metar?.getWindDirection()?.toFloat() ?: 0f
+                airportInfo.vento?.getWindDirection()?.toFloat() ?: 0f
             )
         }
     }

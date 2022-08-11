@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">Aero Information</string>
-	<string name="title_search_bar">Exemplo: SBGO, SBSP</string>
+	<string name="title_search_bar">Pesquise por mais de um AD, Ex: SBGO,SBSP</string>
 </resources>

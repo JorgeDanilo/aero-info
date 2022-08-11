@@ -63,7 +63,7 @@ object DateUtil {
             val year = strData.substring(0, 2)
             val month = strData.substring(2, 4)
             val day = strData.substring(4, 6)
-            val hour = strData.substring(4, 6)
+            val hour = strData.substring(6, 8)
             val minutes = strData.substring(8, 10)
             "$day/$month/$year $hour:$minutes"
         } catch (e: Exception) {
