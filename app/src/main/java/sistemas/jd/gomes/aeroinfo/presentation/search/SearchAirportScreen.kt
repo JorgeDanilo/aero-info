@@ -1,6 +1,5 @@
 package sistemas.jd.gomes.aeroinfo.presentation.search
 
-import android.gesture.Gesture
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -19,6 +18,7 @@ import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -283,6 +283,8 @@ fun ListAirportItem(
             Text(
                 text = infoAirport[5],
                 fontSize = 14.sp,
+                maxLines = 8,
+                overflow = TextOverflow.Ellipsis,
                 modifier = Modifier
                     .padding(start = 2.dp, top = 2.dp)
             )
