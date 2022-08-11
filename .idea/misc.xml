@@ -59,6 +59,7 @@
         <entry key="app/src/main/res/drawable/ic_compass_rose.xml" value="0.357" />
         <entry key="app/src/main/res/drawable/ic_get_runway.xml" value="0.1185" />
         <entry key="app/src/main/res/layout/activity_detail_pdf.xml" value="0.2265625" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.271" />
         <entry key="app/src/main/res/xml/provider_paths.xml" value="0.17395833333333333" />
       </map>
     </option>
