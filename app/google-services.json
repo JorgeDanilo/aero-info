@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "446128783364",
+    "project_id": "aeroinfo-80d2b",
+    "storage_bucket": "aeroinfo-80d2b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:446128783364:android:e22a84b3d042ae9778f551",
+        "android_client_info": {
+          "package_name": "sistemas.jd.gomes.aeroinfo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "446128783364-qm9d9d7b2k3ofk0pijs45e6pmnko35rt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAACRoruM-LJrP1wm9JdNKNmwycwoArcKo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "446128783364-qm9d9d7b2k3ofk0pijs45e6pmnko35rt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
